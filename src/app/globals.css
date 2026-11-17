@@ -1,37 +1,230 @@
 @import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans";
 
-/* Tokens provisórios. Serão substituídos pelos do protótipo no Figma. */
+/* =====================================================================
+   GO Bunker! · Tokens visuais
+   Linguagem: cards brancos bem arredondados sobre fundo lavanda,
+   ligados por "pontes" com cantos côncavos; azul como ação principal,
+   laranja para ações de alerta; ícones em blocos pastel.
+   ===================================================================== */
 :root {
-  --background: #f6f6f4;
-  --surface: #ffffff;
-  --foreground: #141414;
-  --muted: #6b6b6b;
-  --border: #e4e4e0;
-  --accent: #ff5a1f;
-}
+  color-scheme: light;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0e0e0e;
-    --surface: #171717;
-    --foreground: #f2f2f2;
-    --muted: #9a9a9a;
-    --border: #262626;
-  }
+  --background: #e8ebf8;
+  --surface: #ffffff;
+  --tile: #eef1fb;          /* blocos internos, inputs, teclas */
+  --tile-strong: #e3e8fa;
+
+  --foreground: #2a3768;    /* azul-marinho dos títulos */
+  --muted: #8a93b8;
+  --border: #e1e6f6;
+
+  --primary: #3b5bf6;
+  --primary-from: #5574ff;
+  --primary-to: #2e4ff0;
+  --accent: #ff5a36;
+  --accent-from: #ff7347;
+  --accent-to: #f2462a;
+
+  /* blocos de ícone pastel */
+  --tint-red: #ffe1dc;
+  --tint-yellow: #fdf3c4;
+  --tint-green: #def7d3;
+  --tint-blue: #dfe6ff;
+  --tint-purple: #ebe2ff;
+  --tint-orange: #ffe8d6;
+
+  --radius-card: 2.25rem;   /* 36px */
+  --radius-tile: 1.125rem;  /* 18px */
+  --bridge-r: 12px;         /* raio dos cantos côncavos das pontes */
+
+  --shadow-card: 0 24px 48px -18px rgb(59 91 246 / 0.18), 0 6px 14px -6px rgb(42 55 104 / 0.08);
+  --shadow-primary: 0 12px 24px -8px rgb(59 91 246 / 0.55);
+  --shadow-accent: 0 12px 24px -8px rgb(255 90 54 / 0.5);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-surface: var(--surface);
+  --color-tile: var(--tile);
+  --color-tile-strong: var(--tile-strong);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
   --color-border: var(--border);
+  --color-primary: var(--primary);
   --color-accent: var(--accent);
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --color-tint-red: var(--tint-red);
+  --color-tint-yellow: var(--tint-yellow);
+  --color-tint-green: var(--tint-green);
+  --color-tint-blue: var(--tint-blue);
+  --color-tint-purple: var(--tint-purple);
+  --color-tint-orange: var(--tint-orange);
+  --font-sans: "Plus Jakarta Sans Variable", system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
+  --radius-card: var(--radius-card);
+  --radius-tile: var(--radius-tile);
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #f1f3fc 0%, transparent 60%),
+    radial-gradient(900px 500px at 110% 110%, #dfe4fa 0%, transparent 60%),
+    var(--background);
   color: var(--foreground);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  /* ---------------------------------------------------------------
+     Widget: card branco. Dentro de um .widget-group a sombra é do
+     grupo (drop-shadow), para que card + ponte pareçam uma peça só.
+     --------------------------------------------------------------- */
+  .widget {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 1rem;
+  }
+  .widget-group {
+    display: flex;
+    flex-direction: column;
+    filter: drop-shadow(0 22px 22px rgb(59 91 246 / 0.12)) drop-shadow(0 4px 6px rgb(42 55 104 / 0.05));
+  }
+  .widget-group.row { flex-direction: row; }
+  .widget-group > .widget { box-shadow: none; }
+
+  /* ---------------------------------------------------------------
+     Ponte entre dois widgets, com cantos côncavos.
+     Vertical (padrão): liga o card de cima ao de baixo.
+     .row: liga o card da esquerda ao da direita.
+     --------------------------------------------------------------- */
+  .bridge {
+    position: relative;
+    align-self: var(--bridge-align, center);
+    width: var(--bridge-size, 2.5rem);
+    height: calc(var(--bridge-r) * 2);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+  .bridge::before,
+  .bridge::after {
+    content: "";
+    position: absolute;
+    width: var(--bridge-r);
+    height: 100%;
+    top: 0;
+  }
+  .bridge::before {
+    right: 100%;
+    background:
+      radial-gradient(circle at 0 0, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 0 100% / 100% 50% no-repeat,
+      radial-gradient(circle at 0 100%, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 0 0 / 100% 50% no-repeat;
+  }
+  .bridge::after {
+    left: 100%;
+    background:
+      radial-gradient(circle at 100% 0, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 0 100% / 100% 50% no-repeat,
+      radial-gradient(circle at 100% 100%, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 0 0 / 100% 50% no-repeat;
+  }
+  .widget-group.row > .bridge {
+    width: calc(var(--bridge-r) * 2);
+    height: var(--bridge-size, 2.5rem);
+  }
+  .widget-group.row > .bridge::before,
+  .widget-group.row > .bridge::after {
+    width: 100%;
+    height: var(--bridge-r);
+    left: 0;
+    right: auto;
+  }
+  .widget-group.row > .bridge::before {
+    top: auto;
+    bottom: 100%;
+    background:
+      radial-gradient(circle at 0 0, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 100% 0 / 50% 100% no-repeat,
+      radial-gradient(circle at 100% 0, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 0 0 / 50% 100% no-repeat;
+  }
+  .widget-group.row > .bridge::after {
+    top: 100%;
+    background:
+      radial-gradient(circle at 0 100%, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 100% 0 / 50% 100% no-repeat,
+      radial-gradient(circle at 100% 100%, transparent calc(var(--bridge-r) - 0.5px), var(--surface) var(--bridge-r)) 0 0 / 50% 100% no-repeat;
+  }
+
+  /* Bloco de ícone */
+  .tile {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: var(--radius-tile);
+    background: var(--tile);
+    box-shadow: inset 0 -2px 0 rgb(42 55 104 / 0.04), 0 6px 12px -6px rgb(59 91 246 / 0.18);
+  }
+
+  /* Botões */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 3rem;
+    padding: 0 1.5rem;
+    border-radius: var(--radius-tile);
+    font-weight: 600;
+    transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover { filter: brightness(1.05); }
+  .btn:active { transform: translateY(1px) scale(0.99); }
+  .btn:disabled { opacity: 0.6; pointer-events: none; }
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, var(--primary-from), var(--primary-to));
+    box-shadow: var(--shadow-primary);
+  }
+  .btn-accent {
+    color: #fff;
+    background: linear-gradient(180deg, var(--accent-from), var(--accent-to));
+    box-shadow: var(--shadow-accent);
+  }
+  .btn-soft {
+    color: var(--foreground);
+    background: var(--tile);
+  }
+
+  /* Campos */
+  .field {
+    height: 3rem;
+    width: 100%;
+    padding: 0 1.125rem;
+    border-radius: var(--radius-tile);
+    background: var(--tile);
+    color: var(--foreground);
+    font-weight: 500;
+    box-shadow: inset 0 2px 4px rgb(42 55 104 / 0.05);
+    outline: none;
+    transition: box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .field::placeholder { color: var(--muted); }
+  .field:focus {
+    background: #fff;
+    box-shadow: 0 0 0 2px var(--primary), 0 8px 18px -10px rgb(59 91 246 / 0.6);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    height: 1.75rem;
+    padding: 0 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+}
+
+/* Foco visível para teclado */
+:where(a, button, select, input, summary):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
 }

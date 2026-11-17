@@ -9,14 +9,10 @@ export function SignInForm({ back }: { back?: string }) {
   return (
     <form action={action} className="flex flex-col gap-3">
       <input type="hidden" name="voltar" value={back ?? "/"} />
-      <input name="email" type="email" required placeholder="E-mail" autoComplete="email"
-        className="rounded-lg border border-border bg-surface px-3 py-2" />
-      <input name="password" type="password" required placeholder="Senha" autoComplete="current-password"
-        className="rounded-lg border border-border bg-surface px-3 py-2" />
-      {error && <p className="text-sm text-red-500">{error}</p>}
-      <button disabled={pending} className="rounded-lg bg-accent px-3 py-2 font-medium text-white disabled:opacity-60">
-        {pending ? "Entrando..." : "Entrar"}
-      </button>
+      <input name="email" type="email" required placeholder="E-mail" autoComplete="email" className="field" />
+      <input name="password" type="password" required placeholder="Senha" autoComplete="current-password" className="field" />
+      {error && <p className="text-sm font-medium text-accent">{error}</p>}
+      <button disabled={pending} className="btn btn-primary mt-1 w-full">{pending ? "Entrando..." : "Entrar"}</button>
     </form>
   );
 }

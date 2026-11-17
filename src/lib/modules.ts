@@ -8,6 +8,8 @@ export interface SystemModule {
   name: string;
   description: string;
   href: string;
+  icon: string;
+  tint: "red" | "yellow" | "green" | "blue" | "purple" | "orange";
   roles: AppRole[];
   ready: boolean;
 }
@@ -18,6 +20,8 @@ export const MODULES: SystemModule[] = [
     name: "GO CL",
     description: "Captação de leads, briefing e contratos",
     href: "/go-cl",
+    icon: "🎯",
+    tint: "red",
     roles: ["owner", "admin", "team"],
     ready: true,
   },
@@ -26,6 +30,8 @@ export const MODULES: SystemModule[] = [
     name: "GO UP",
     description: "Projetos, fluxos, demandas e postagens",
     href: "/go-up",
+    icon: "🚀",
+    tint: "blue",
     roles: ["owner", "admin", "team"],
     ready: false,
   },
@@ -34,6 +40,8 @@ export const MODULES: SystemModule[] = [
     name: "GO GRAND",
     description: "Financeiro: entradas, saídas e indicadores",
     href: "/go-grand",
+    icon: "💰",
+    tint: "yellow",
     roles: ["owner", "admin"],
     ready: false,
   },
@@ -42,6 +50,8 @@ export const MODULES: SystemModule[] = [
     name: "GO THERE",
     description: "Portal de acompanhamento e arquivos",
     href: "/go-there",
+    icon: "🛰️",
+    tint: "purple",
     roles: ["owner", "admin", "team", "client"],
     ready: false,
   },
@@ -50,6 +60,8 @@ export const MODULES: SystemModule[] = [
     name: "BUNKER CHAT",
     description: "Chat interno, com clientes e assistente",
     href: "/bunker-chat",
+    icon: "💬",
+    tint: "green",
     roles: ["owner", "admin", "team", "client"],
     ready: false,
   },
