@@ -23,7 +23,6 @@ const br = (d: string | null) => (d ? `${d.slice(8, 10)}/${d.slice(5, 7)}` : "")
 const brDateTime = (iso: string) =>
   new Intl.DateTimeFormat("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }).format(new Date(iso));
 
-export const assistantEnabled = () => Boolean(process.env.ANTHROPIC_API_KEY);
 
 async function projectFacts(supabase: Supabase, projectId: string, today: string) {
   const soon = new Date(Date.now() + 30 * 864e5).toISOString();
@@ -84,20 +83,63 @@ async function teamFacts(supabase: Supabase, userId: string, today: string) {
   return facts;
 }
 
-async function callModel(system: string, messages: { role: "user" | "assistant"; content: string }[]) {
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "x-api-key": process.env.ANTHROPIC_API_KEY!,
-      "anthropic-version": "2023-06-01",
-      "content-type": "application/json",
-    },
-    body: JSON.stringify({ model: process.env.ASSISTENTE_MODELO || "claude-haiku-5-5", max_tokens: 700, system, messages }),
-    signal: AbortSignal.timeout(9000),
-  });
-  if (!res.ok) throw new Error(`modelo respondeu ${res.status}`);
-  const data = (await res.json()) as { content?: { type: string; text?: string }[] };
-  const text = (data.content ?? []).filter((b) => b.type === "text").map((b) => b.text).join("").trim();
+type ModelMessage = { role: "user" | "assistant"; content: string };
+
+/**
+ * Provedor do modelo, escolhido pela chave cadastrada no Netlify:
+ *   GROQ_API_KEY      → Groq (plano grátis, sem cartão)        ← padrão
+ *   GEMINI_API_KEY    → Google Gemini (plano grátis)
+ *   ANTHROPIC_API_KEY → Claude (pago)
+ * Groq e Gemini usam o formato compatível com OpenAI.
+ */
+function provider() {
+  if (process.env.GROQ_API_KEY) {
+    return { kind: "openai" as const, url: "https://api.groq.com/openai/v1/chat/completions", key: process.env.GROQ_API_KEY, model: "openai/gpt-oss-120b" };
+  }
+  if (process.env.GEMINI_API_KEY) {
+    return { kind: "openai" as const, url: "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", key: process.env.GEMINI_API_KEY, model: "gemini-3.5-flash-lite" };
+  }
+  if (process.env.ANTHROPIC_API_KEY) {
+    return { kind: "anthropic" as const, url: "https://api.anthropic.com/v1/messages", key: process.env.ANTHROPIC_API_KEY, model: "claude-haiku-5-5" };
+  }
+  return null;
+}
+
+export const assistantEnabled = () => provider() !== null;
+
+async function callModel(system: string, messages: ModelMessage[]) {
+  const p = provider()!;
+  const model = process.env.ASSISTENTE_MODELO || p.model;
+  const init = { method: "POST", signal: AbortSignal.timeout(9000) };
+
+  let text: string;
+  if (p.kind === "anthropic") {
+    const res = await fetch(p.url, {
+      ...init,
+      headers: { "x-api-key": p.key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      body: JSON.stringify({ model, max_tokens: 700, system, messages }),
+    });
+    if (!res.ok) throw new Error(`modelo respondeu ${res.status}`);
+    const data = (await res.json()) as { content?: { type: string; text?: string }[] };
+    text = (data.content ?? []).filter((b) => b.type === "text").map((b) => b.text).join("");
+  } else {
+    const res = await fetch(p.url, {
+      ...init,
+      headers: { authorization: `Bearer ${p.key}`, "content-type": "application/json" },
+      body: JSON.stringify({
+        model,
+        max_tokens: 1200,
+        temperature: 0.4,
+        messages: [{ role: "system", content: system }, ...messages],
+        ...(model.includes("gpt-oss") ? { reasoning_effort: "low" } : {}),
+      }),
+    });
+    if (res.status === 429) throw new Error("limite do plano grátis");
+    if (!res.ok) throw new Error(`modelo respondeu ${res.status}`);
+    const data = (await res.json()) as { choices?: { message?: { content?: string | null } }[] };
+    text = data.choices?.[0]?.message?.content ?? "";
+  }
+  text = text.trim();
   if (!text) throw new Error("resposta vazia");
   return text.slice(0, 4000);
 }
@@ -123,7 +165,7 @@ export async function answer(
 
   const admin = createAdminClient();
   if (!assistantEnabled() || !admin) {
-    return { error: session.isStaff ? "O assistente ainda não foi ligado: falta a chave ANTHROPIC_API_KEY no Netlify." : "O assistente está indisponível agora. A equipe vai responder por aqui." };
+    return { error: session.isStaff ? "O assistente ainda não foi ligado: falta a chave GROQ_API_KEY no Netlify (grátis)." : "O assistente está indisponível agora. A equipe vai responder por aqui." };
   }
 
   // Limite por pessoa: perguntas na última hora
@@ -157,8 +199,11 @@ export async function answer(
   try {
     text = await callModel(systemPrompt(ctx), messages);
   } catch (e) {
-    console.error("assistente:", (e as Error).message);
-    return { error: "O assistente não conseguiu responder agora. Tente de novo em instantes." };
+    const reason = (e as Error).message;
+    console.error("assistente:", reason);
+    return { error: reason === "limite do plano grátis"
+      ? "O assistente atingiu o limite gratuito por agora. Tente de novo mais tarde."
+      : "O assistente não conseguiu responder agora. Tente de novo em instantes." };
   }
 
   const { data: saved, error } = await admin.from("chat_messages")

@@ -72,8 +72,8 @@ novo → abordado → cativando → briefing → proposta → negociação → g
 
 - Equipe: conversa particular pelo 🤖 na lista do chat. Em qualquer conversa de canal ou projeto, quem escrever `@assistente` recebe resposta.
 - Responde com a base de conhecimento (Bunker Chat › 🤖 › Treinar) e com os dados que quem pergunta pode ver. Nas conversas de projeto, usa só o que o cliente pode ver. O financeiro nunca entra.
-- Ligar: `ANTHROPIC_API_KEY` nas variáveis do Netlify. Modelo opcional em `ASSISTENTE_MODELO` (padrão `claude-haiku-5-5`). Limite de 30 perguntas por pessoa por hora.
-- As perguntas e o contexto são processados pela API da Anthropic (fora do Brasil). Não cadastre dados sensíveis na base.
+- Ligar de graça: crie uma chave em console.groq.com (sem cartão) e cadastre `GROQ_API_KEY` no Netlify. Alternativas: `GEMINI_API_KEY` (grátis) ou `ANTHROPIC_API_KEY` (pago). Modelo opcional em `ASSISTENTE_MODELO`. Limite de 30 perguntas por pessoa por hora.
+- As perguntas e o contexto são processados pelo provedor escolhido (fora do Brasil); nos planos grátis ele pode guardar o conteúdo. Não cadastre dados sensíveis na base.
 
 ## Indo para produção ou para servidor próprio
 

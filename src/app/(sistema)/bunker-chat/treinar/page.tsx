@@ -24,12 +24,12 @@ export default async function TrainPage() {
       <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto p-4 sm:p-5">
         {!enabled && (
           <p className="rounded-[1.25rem] bg-tint-yellow p-3 text-sm text-[#7a5f00]">
-            O assistente ainda está desligado. Para ligar, crie a chave da API da Anthropic e cadastre no Netlify como <b>ANTHROPIC_API_KEY</b> (Site configuration › Environment variables). Depois é só publicar de novo.
+            O assistente ainda está desligado. Para ligar de graça, crie uma chave em console.groq.com (sem cartão) e cadastre no Netlify como <b>GROQ_API_KEY</b> (Site configuration › Environment variables). Depois é só publicar de novo.
           </p>
         )}
         <div className="rounded-[1.25rem] bg-tile/60 p-4 text-sm text-muted">
           <p><b className="text-foreground">Como ele responde:</b> com o que estiver aqui e com os dados do sistema que quem pergunta pode ver (projetos, etapas, pedidos de arquivo, posts e demandas). O financeiro nunca entra.</p>
-          <p className="mt-2"><b className="text-foreground">Equipe</b>: só aparece nas conversas internas. <b className="text-foreground">Todos</b>: também nas conversas com clientes, que leem a resposta. Não coloque aqui senhas nem dados sensíveis.</p>
+          <p className="mt-2"><b className="text-foreground">Equipe</b>: só aparece nas conversas internas. <b className="text-foreground">Todos</b>: também nas conversas com clientes, que leem a resposta. Não coloque aqui senhas nem dados sensíveis: no plano grátis, o provedor pode guardar as conversas.</p>
         </div>
 
         <div className="flex flex-col gap-3">
