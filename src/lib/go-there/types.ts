@@ -63,3 +63,12 @@ export interface ClientUser {
   user_id: string;
   name: string | null;
 }
+
+/** Demanda do GO UP liberada para o cliente acompanhar. */
+export interface ClientTask {
+  id: string;
+  title: string;
+  due_date: string | null;
+  completed_at: string | null;
+  column: { name: string; is_done: boolean; tint: string } | null;
+}

@@ -3,7 +3,7 @@ import {
   changeFileVisibility, changeProject, changeRequest, changeStage, removeFile, removeStage, revokeClientAccess,
 } from "@/app/(sistema)/go-there/actions";
 import { currentStage, formatBytes, progressOf } from "@/lib/go-there/progress";
-import type { ClientUser, FileRequest, PortalFile, PortalProject, ProjectUpdate, Stage } from "@/lib/go-there/types";
+import type { ClientTask, ClientUser, FileRequest, PortalFile, PortalProject, ProjectUpdate, Stage } from "@/lib/go-there/types";
 import { formatDateTime } from "../go-cl/labels";
 import { Bridge, Tile, Widget, WidgetGroup } from "../ui";
 import { AccessForm, RequestForm, StageForm, UpdateForm } from "./forms";
@@ -48,6 +48,7 @@ function SectionHead({ icon, tint, title, hint }: { icon: string; tint: "blue" |
 export function ProjectPortal({
   project,
   stages,
+  clientTasks = [],
   updates,
   requests,
   files,
@@ -58,6 +59,7 @@ export function ProjectPortal({
 }: {
   project: PortalProject;
   stages: Stage[];
+  clientTasks?: ClientTask[];
   updates: ProjectUpdate[];
   requests: FileRequest[];
   files: PortalFile[];
@@ -236,6 +238,24 @@ export function ProjectPortal({
               {isStaff && <StageForm projectId={project.id} />}
             </div>
           </WidgetGroup>
+
+          {/* Entregas em produção (demandas do GO UP liberadas ao cliente) */}
+          {clientTasks.length > 0 && (
+            <WidgetGroup>
+              <SectionHead icon="🛠️" tint="yellow" title="Em produção" hint={isStaff ? "Demandas do GO UP que o cliente acompanha." : "O que a equipe está produzindo para você."} />
+              <Bridge align="start" offset="3.5rem" />
+              <ul className="widget flex flex-col gap-1 p-2">
+                {clientTasks.map((t) => (
+                  <li key={t.id} className="flex flex-wrap items-center gap-3 rounded-[1.25rem] p-2">
+                    <span className={`grid size-8 place-items-center rounded-full text-sm font-bold ${t.completed_at ? "bg-tint-green text-[#3c8a2e]" : "bg-tile text-muted"}`}>{t.completed_at ? "✓" : "•"}</span>
+                    <span className={`min-w-40 flex-1 font-medium ${t.completed_at ? "text-muted line-through decoration-1" : ""}`}>{t.title}</span>
+                    {t.column && <span className="pill bg-tile text-muted">{t.column.name}</span>}
+                    {t.due_date && !t.completed_at && <span className="text-xs text-muted">até {br(t.due_date)}</span>}
+                  </li>
+                ))}
+              </ul>
+            </WidgetGroup>
+          )}
 
           {/* Mural */}
           <WidgetGroup>

@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type {
-  ClientUser, FileRequest, PortalFile, PortalProject, ProjectStatus, ProjectUpdate, Stage, StageStatus,
+  ClientTask, ClientUser, FileRequest, PortalFile, PortalProject, ProjectStatus, ProjectUpdate, Stage, StageStatus,
 } from "@/lib/go-there/types";
 
 // Camada de dados do GO THERE. O RLS decide o que cada um vê:
@@ -31,15 +31,18 @@ export async function getProject(id: string) {
 
 export async function getProjectDetails(projectId: string) {
   const supabase = await createClient();
-  const [stages, updates, requests, files] = await Promise.all([
+  const [stages, updates, requests, files, tasks, columns] = await Promise.all([
     supabase.from("project_stages").select("*").eq("project_id", projectId).order("position").order("created_at"),
     supabase.from("project_updates").select("id, project_id, body, created_at, created_by").eq("project_id", projectId)
       .order("created_at", { ascending: false }).limit(30),
     supabase.from("file_requests").select("*").eq("project_id", projectId).order("created_at", { ascending: false }),
     supabase.from("files").select("id, bucket, path, name, mime_type, size_bytes, visibility, request_id, created_at, uploaded_by")
       .eq("project_id", projectId).order("created_at", { ascending: false }),
+    supabase.from("tasks").select("id, title, column_id, due_date, completed_at").eq("project_id", projectId)
+      .eq("visible_to_client", true).is("parent_id", null).order("position"),
+    supabase.from("task_columns").select("id, name, position, is_done, tint").order("position"),
   ]);
-  for (const r of [stages, updates, requests, files]) if (r.error) throw r.error;
+  for (const r of [stages, updates, requests, files, tasks, columns]) if (r.error) throw r.error;
 
   // Nomes de quem publicou (perfis visíveis pelo RLS; cliente vê só o próprio).
   const authorIds = [...new Set((updates.data ?? []).map((u) => u.created_by).filter(Boolean))] as string[];
@@ -57,6 +60,7 @@ export async function getProjectDetails(projectId: string) {
 
   return {
     stages: (stages.data ?? []) as Stage[],
+    clientTasks: (tasks.data ?? []).map((t) => ({ ...t, column: (columns.data ?? []).find((c) => c.id === t.column_id) ?? null })) as ClientTask[],
     updates: (updates.data ?? []).map((u) => ({ ...u, author: names.get(u.created_by) ?? "GO Bunker!" })) as ProjectUpdate[],
     requests: (requests.data ?? []) as FileRequest[],
     // Caminho interno não sai do servidor; vai só o link assinado.
