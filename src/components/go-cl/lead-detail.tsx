@@ -1,17 +1,19 @@
 import Link from "next/link";
-import type { ContactChannel, Lead, LeadInteraction } from "@/lib/types";
+import type { Briefing, ContactChannel, Lead, LeadInteraction } from "@/lib/types";
 import type { FormState } from "@/app/(sistema)/go-cl/[id]/actions";
 import { LEAD_STAGES, stageLabel } from "@/lib/go-cl/stages";
 import { formatBRL } from "@/lib/go-cl/render";
 import { Bridge, Tile, Widget, WidgetGroup } from "../ui";
 import { CHANNEL, TEMPERATURE, formatDateTime } from "./labels";
 import { MessageCard, type ReadyMessage } from "./message-card";
+import { BriefingStatus } from "./briefing-header";
 import { InteractionForm, LeadInfoForm } from "./lead-forms";
 
 type FormAction = (state: FormState, formData: FormData) => Promise<FormState>;
 
 export function LeadDetail({
   lead,
+  briefing,
   interactions,
   messages,
   moveAction,
@@ -21,6 +23,7 @@ export function LeadDetail({
   now,
 }: {
   lead: Lead;
+  briefing: Briefing | null;
   interactions: LeadInteraction[];
   messages: ReadyMessage[];
   moveAction: (formData: FormData) => void | Promise<void>;
@@ -85,6 +88,25 @@ export function LeadDetail({
           )}
         </Widget>
       )}
+
+      {/* Briefing */}
+      <Widget className="flex flex-wrap items-center gap-x-4 gap-y-3 p-3 pr-4">
+        <Tile tint="purple" size="md">📝</Tile>
+        <div className="min-w-48 flex-1">
+          <div className="flex items-center gap-2">
+            <h2 className="font-bold">Briefing</h2>
+            <BriefingStatus briefing={briefing} />
+          </div>
+          <p className="text-sm text-muted">
+            {briefing
+              ? `${briefing.deliverables.length} entrega${briefing.deliverables.length === 1 ? "" : "s"} · ${briefing.campaigns.length} campanha${briefing.campaigns.length === 1 ? "" : "s"} · ${briefing.goals.length} meta${briefing.goals.length === 1 ? "" : "s"}`
+              : "Diretrizes, propósitos, campanhas e resultados prováveis."}
+          </p>
+        </div>
+        <Link href={`/go-cl/${lead.id}/briefing`} className="btn btn-primary h-11 px-5 text-sm">
+          {briefing ? "Abrir briefing" : "Começar briefing"}
+        </Link>
+      </Widget>
 
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <div className="flex flex-col gap-8">
