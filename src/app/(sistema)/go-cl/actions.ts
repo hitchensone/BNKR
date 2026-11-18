@@ -41,4 +41,5 @@ export async function changeStage(formData: FormData) {
   if (!LEAD_STAGES.some((s) => s.id === stage)) return;
   await moveLead(id, stage);
   revalidatePath("/go-cl");
+  revalidatePath(`/go-cl/${id}`);
 }

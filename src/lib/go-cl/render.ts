@@ -27,7 +27,7 @@ export function renderLeadMessage(body: string, lead: Lead, agencyName: string) 
     segmento: lead.segment,
     cidade: lead.city,
     agencia: agencyName,
-  });
+  }).replace(/([!?])\./g, "$1"); // "GO Bunker!." → "GO Bunker!"
 }
 
 /** Link de WhatsApp com a mensagem pronta (abre no app, quem envia é você). */

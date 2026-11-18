@@ -36,3 +36,8 @@ export async function requireStaff() {
   if (!session.isStaff) redirect("/");
   return session;
 }
+
+/** Momento da requisição (ms). Chamado depois dos dados da sessão, quando a página já é dinâmica. */
+export async function requestTime() {
+  return Date.now();
+}

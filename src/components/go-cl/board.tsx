@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Lead } from "@/lib/types";
 import { LEAD_STAGES, OPEN_STAGES } from "@/lib/go-cl/stages";
 import { formatBRL } from "@/lib/go-cl/render";
@@ -79,7 +80,7 @@ export function LeadBoard({
                       <div className="flex items-center gap-3">
                         <Tile tint={t.tint} size="md" className="text-lg"><span title={t.label}>{t.icon}</span></Tile>
                         <div className="min-w-0 flex-1">
-                          <p className="truncate font-semibold">{lead.company_name}</p>
+                          <Link href={`/go-cl/${lead.id}`} className="block truncate font-semibold hover:text-primary">{lead.company_name}</Link>
                           <p className="truncate text-sm text-muted">
                             {[lead.contact_name, lead.segment, lead.city].filter(Boolean).join(" · ") || "Sem detalhes"}
                           </p>
