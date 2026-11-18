@@ -41,3 +41,15 @@ export async function requireStaff() {
 export async function requestTime() {
   return Date.now();
 }
+
+/** Financeiro e configurações: só owner e admin. */
+export async function requireAdmin() {
+  const session = await requireSession();
+  if (!session.roles.some((r) => r === "owner" || r === "admin")) redirect("/");
+  return session;
+}
+
+/** Data de hoje (YYYY-MM-DD) no horário de Brasília. */
+export async function todaySP() {
+  return new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Sao_Paulo" }).format(new Date());
+}

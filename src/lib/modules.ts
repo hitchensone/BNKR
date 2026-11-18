@@ -43,7 +43,7 @@ export const MODULES: SystemModule[] = [
     icon: "💰",
     tint: "yellow",
     roles: ["owner", "admin"],
-    ready: false,
+    ready: true,
   },
   {
     id: "go-there",
