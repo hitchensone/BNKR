@@ -8,6 +8,8 @@ import { formatDateTime } from "../go-cl/labels";
 import { Bridge, Tile, Widget, WidgetGroup } from "../ui";
 import { AccessForm, RequestForm, StageForm, UpdateForm } from "./forms";
 import { Uploader } from "./uploader";
+import { PortalPosts } from "./posts-section";
+import type { PostWithProject } from "@/lib/data/posts";
 
 const br = (iso: string | null) => (iso ? iso.slice(0, 10).split("-").reverse().join("/") : "");
 
@@ -56,6 +58,8 @@ export function ProjectPortal({
   isAdmin,
   clientUsers,
   canCreateAccess,
+  posts = [],
+  today = "",
 }: {
   project: PortalProject;
   stages: Stage[];
@@ -67,6 +71,8 @@ export function ProjectPortal({
   isAdmin: boolean;
   clientUsers: ClientUser[];
   canCreateAccess: boolean;
+  posts?: PostWithProject[];
+  today?: string;
 }) {
   const progress = progressOf(stages);
   const current = currentStage(stages);
@@ -185,6 +191,8 @@ export function ProjectPortal({
           </div>
         )}
       </Widget>
+
+      <PortalPosts posts={posts} isStaff={isStaff} today={today} />
 
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <div className="flex min-w-0 flex-col gap-8">

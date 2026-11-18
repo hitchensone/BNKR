@@ -22,12 +22,15 @@ export default async function GoUpPage() {
             <h1 className="text-2xl font-bold tracking-tight">GO UP</h1>
             <p className="text-sm text-muted">Projetos, demandas e fluxos da agência</p>
           </div>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/go-up/posts" className="btn btn-primary h-11 px-4 text-sm">📅 Postagens</Link>
           {isAdmin && (
-            <div className="flex flex-wrap gap-2">
+            <>
               <Link href="/go-up/config" className="btn btn-soft h-11 px-4 text-sm">⚙️ Fluxo e modelos</Link>
               <Link href="/go-up/equipe" className="btn btn-soft h-11 px-4 text-sm">👥 Equipe</Link>
-            </div>
+            </>
           )}
+          </div>
         </Widget>
         <Link href="/go-up/minhas" className="widget flex w-full items-center gap-4 p-3 pr-5 transition hover:-translate-y-0.5 sm:w-auto">
           <Tile tint={myLate ? "red" : "green"} size="lg">🙋</Tile>
