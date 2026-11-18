@@ -20,6 +20,7 @@ create type public.app_role as enum ('owner', 'admin', 'team', 'client');
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
+set search_path = ''
 as $$
 begin
   new.updated_at = now();
@@ -269,6 +270,9 @@ as $$
   values (_type, _module, _entity, _entity_id, _client_id, _payload);
 $$;
 
+-- Só o próprio banco (triggers) grava eventos; ninguém chama pela API.
+revoke execute on function public.emit_event(text, text, text, uuid, uuid, jsonb) from public, anon, authenticated;
+
 -- =====================================================================
 -- RLS
 -- =====================================================================
@@ -339,6 +343,7 @@ create or replace function public.try_uuid(_value text)
 returns uuid
 language plpgsql
 immutable
+set search_path = ''
 as $$
 begin
   return _value::uuid;

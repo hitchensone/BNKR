@@ -186,6 +186,7 @@ create or replace function public.next_contract_number()
 returns text
 language sql
 volatile
+set search_path = ''
 as $$
   select 'GB-' || to_char(now(), 'YYYY') || '-' || lpad(nextval('public.contract_number_seq')::text, 4, '0');
 $$;
