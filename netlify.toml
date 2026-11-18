@@ -5,3 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # Estas variáveis são públicas por natureza (aparecem nas telas e nos
+  # contratos), então a verificação de segredos não deve barrar o build.
+  # Chaves secretas de verdade (ex.: SUPABASE_SECRET_KEY) continuam verificadas.
+  SECRETS_SCAN_OMIT_KEYS = "AGENCIA_NOME,AGENCIA_CIDADE_FORO,AGENCIA_DOCUMENTO,AGENCIA_ENDERECO,NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
