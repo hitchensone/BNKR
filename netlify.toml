@@ -1,0 +1,7 @@
+# Configuração do Netlify. O Next.js é detectado sozinho;
+# aqui só fixamos a versão do Node exigida pelo Next.js 16.
+[build]
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
