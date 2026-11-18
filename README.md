@@ -8,7 +8,7 @@ Sistema modular da GO Bunker! Mídia e Tecnologia. Cada módulo é uma área do 
 | **GO UP** | Work OS: demandas, fluxo configurável, modelos, equipe, postagens e estatísticas | Pronto |
 | **GO GRAND** | Financeiro: lançamentos, recorrentes, indicadores e comparativos | Pronto |
 | **GO THERE** | Portal do cliente: etapas, mural, pedidos de arquivo, entregas e acessos | Pronto |
-| **BUNKER CHAT** | Chat interno, com clientes e assistente | A fazer |
+| **BUNKER CHAT** | Chat em tempo real (equipe, conversas diretas, cliente por projeto) e Assistente Bunker | Pronto |
 
 ## Stack
 
@@ -67,6 +67,13 @@ novo → abordado → cativando → briefing → proposta → negociação → g
   2. marca o lead como ganho
   3. gera o projeto inicial (GO UP)
   4. emite `contract.signed` (GO GRAND)
+
+## Assistente Bunker
+
+- Equipe: conversa particular pelo 🤖 na lista do chat. Em qualquer conversa de canal ou projeto, quem escrever `@assistente` recebe resposta.
+- Responde com a base de conhecimento (Bunker Chat › 🤖 › Treinar) e com os dados que quem pergunta pode ver. Nas conversas de projeto, usa só o que o cliente pode ver. O financeiro nunca entra.
+- Ligar: `ANTHROPIC_API_KEY` nas variáveis do Netlify. Modelo opcional em `ASSISTENTE_MODELO` (padrão `claude-haiku-5-5`). Limite de 30 perguntas por pessoa por hora.
+- As perguntas e o contexto são processados pela API da Anthropic (fora do Brasil). Não cadastre dados sensíveis na base.
 
 ## Indo para produção ou para servidor próprio
 

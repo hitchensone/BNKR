@@ -63,7 +63,7 @@ export const MODULES: SystemModule[] = [
     icon: "💬",
     tint: "green",
     roles: ["owner", "admin", "team", "client"],
-    ready: false,
+    ready: true,
   },
 ];
 

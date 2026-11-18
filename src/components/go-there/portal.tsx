@@ -60,6 +60,7 @@ export function ProjectPortal({
   canCreateAccess,
   posts = [],
   today = "",
+  chatHref,
 }: {
   project: PortalProject;
   stages: Stage[];
@@ -73,6 +74,7 @@ export function ProjectPortal({
   canCreateAccess: boolean;
   posts?: PostWithProject[];
   today?: string;
+  chatHref?: string;
 }) {
   const progress = progressOf(stages);
   const current = currentStage(stages);
@@ -151,6 +153,7 @@ export function ProjectPortal({
             <h1 className="truncate text-2xl font-bold tracking-tight">{project.name}</h1>
           </div>
           <span className={`pill ${st.cls}`}>{st.label}</span>
+          {chatHref && <Link href={chatHref} className="btn btn-soft h-11 px-4 text-sm">💬 {isStaff ? "Conversa com o cliente" : "Falar com a agência"}</Link>}
         </div>
       </WidgetGroup>
 
