@@ -7,7 +7,7 @@ Sistema modular da GO Bunker! Mídia e Tecnologia. Cada módulo é uma área do 
 | **GO CL** | Captação de leads: atrair, cativar, briefing, proposta e contrato | Pronto |
 | **GO UP** | Work OS: projetos, fluxos, demandas e postagens | A fazer |
 | **GO GRAND** | Financeiro: lançamentos, recorrentes, indicadores e comparativos | Pronto |
-| **GO THERE** | Portal do cliente: andamento, arquivos e entregas | A fazer |
+| **GO THERE** | Portal do cliente: etapas, mural, pedidos de arquivo, entregas e acessos | Pronto |
 | **BUNKER CHAT** | Chat interno, com clientes e assistente | A fazer |
 
 ## Stack

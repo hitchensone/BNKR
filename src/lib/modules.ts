@@ -53,7 +53,7 @@ export const MODULES: SystemModule[] = [
     icon: "🛰️",
     tint: "purple",
     roles: ["owner", "admin", "team", "client"],
-    ready: false,
+    ready: true,
   },
   {
     id: "bunker-chat",

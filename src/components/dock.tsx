@@ -55,7 +55,7 @@ export function Dock({ modules, initials }: { modules: DockModule[]; initials: s
           <nav className="widget flex flex-col items-center gap-3 rounded-[1.75rem] p-3">
             {items}
             <div className="my-1 h-px w-8 bg-border" />
-            <span title="Sua conta" className="tile size-12 bg-tint-blue text-sm font-bold text-primary">{initials}</span>
+            <Link href="/conta" title="Minha conta" aria-label="Minha conta" className="tile size-12 bg-tint-blue text-sm font-bold text-primary">{initials}</Link>
             <form action="/auth/sair" method="post">
               <button title="Sair" aria-label="Sair" className="tile size-12 text-lg text-muted hover:text-accent">⏻</button>
             </form>
