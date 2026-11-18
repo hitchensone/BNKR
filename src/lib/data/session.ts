@@ -2,6 +2,7 @@ import { cache } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import type { AppRole } from "@/lib/types";
+import { isTheme, type ThemeId } from "@/lib/theme";
 
 /** Usuário logado e seus papéis. Cacheado por requisição. */
 export const getSession = cache(async () => {
@@ -12,7 +13,7 @@ export const getSession = cache(async () => {
 
   const [{ data: roles }, { data: profile }] = await Promise.all([
     supabase.from("user_roles").select("role, client_id").eq("user_id", userId),
-    supabase.from("profiles").select("full_name, avatar_url").eq("id", userId).maybeSingle(),
+    supabase.from("profiles").select("full_name, avatar_url, theme").eq("id", userId).maybeSingle(),
   ]);
 
   const list = (roles ?? []) as { role: AppRole; client_id: string | null }[];
@@ -22,6 +23,7 @@ export const getSession = cache(async () => {
     roles: list.map((r) => r.role),
     clientIds: list.filter((r) => r.client_id).map((r) => r.client_id as string),
     isStaff: list.some((r) => r.role !== "client"),
+    theme: (isTheme(profile?.theme) ? profile.theme : "padrao") as ThemeId,
   };
 });
 

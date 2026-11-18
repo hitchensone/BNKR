@@ -4,7 +4,7 @@ import type { AppRole } from "./types";
 // desligar um módulo é só mudar este arquivo.
 
 export interface SystemModule {
-  id: "go-cl" | "go-up" | "go-grand" | "go-there" | "bunker-chat";
+  id: "go-cl" | "go-up" | "go-grand" | "go-there" | "bunker-chat" | "ajustes";
   name: string;
   description: string;
   href: string;
@@ -62,6 +62,16 @@ export const MODULES: SystemModule[] = [
     href: "/bunker-chat",
     icon: "💬",
     tint: "green",
+    roles: ["owner", "admin", "team", "client"],
+    ready: true,
+  },
+  {
+    id: "ajustes",
+    name: "AJUSTES",
+    description: "Tema, aparência e sua conta",
+    href: "/ajustes",
+    icon: "⚙️",
+    tint: "orange",
     roles: ["owner", "admin", "team", "client"],
     ready: true,
   },

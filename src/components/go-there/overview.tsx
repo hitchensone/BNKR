@@ -42,7 +42,7 @@ export function ProjectsOverview({
             </span>
             <span className="font-semibold">{progress}%</span>
           </div>
-          {open > 0 && <span className="pill w-fit bg-tint-yellow text-[#8a6d00]">{open} pedido{open > 1 ? "s" : ""} aguardando</span>}
+          {open > 0 && <span className="pill w-fit bg-tint-yellow text-warn">{open} pedido{open > 1 ? "s" : ""} aguardando</span>}
         </Link>
       </li>
     );
@@ -53,7 +53,7 @@ export function ProjectsOverview({
       <Widget className="flex flex-wrap items-center gap-4 p-3 pr-5">
         <Tile tint="purple" size="lg">🛰️</Tile>
         <div className="min-w-48 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight">GO THERE</h1>
+          <h1 className="text-xl font-bold tracking-tight">GO THERE</h1>
           <p className="text-sm text-muted">{isStaff ? "Portal de acompanhamento dos clientes" : "Acompanhe seus projetos com a GO Bunker!"}</p>
         </div>
         <span className="pill bg-tile text-muted">{active.length} ativo{active.length === 1 ? "" : "s"}</span>

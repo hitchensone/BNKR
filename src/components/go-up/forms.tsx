@@ -12,7 +12,7 @@ function Feedback({ state }: { state: UpState }) {
   if (!state || state.password) return null;
   return state.error
     ? <p role="alert" className="text-sm font-medium text-accent">{state.error}</p>
-    : <p role="status" className="text-sm font-medium text-[#3c8a2e]">{state.ok}</p>;
+    : <p role="status" className="text-sm font-medium text-ok">{state.ok}</p>;
 }
 
 function useResetOnOk(state: UpState) {
@@ -91,7 +91,7 @@ function PrioritySelectInline() {
       {(["baixa", "normal", "alta", "urgente"] as const).map((p) => (
         <label key={p} className="cursor-pointer">
           <input type="radio" name="priority" value={p} defaultChecked={p === "normal"} className="peer sr-only" />
-          <span className="pill bg-tile text-muted transition peer-checked:bg-white peer-checked:text-foreground peer-checked:shadow-[0_0_0_2px_var(--primary)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-primary">
+          <span className="pill bg-tile text-muted transition peer-checked:bg-raised peer-checked:text-foreground peer-checked:shadow-[0_0_0_2px_var(--primary)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-primary">
             {p === "baixa" ? "Baixa" : p === "normal" ? "Normal" : p === "alta" ? "Alta" : "🔥 Urgente"}
           </span>
         </label>
@@ -270,8 +270,8 @@ export function StaffForm() {
           <p className="font-semibold">{state.ok}</p>
           <p className="mt-1">Senha temporária (aparece só agora):</p>
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <code className="rounded-lg bg-white px-3 py-1.5 font-mono text-base font-bold tracking-wider">{state.password}</code>
-            <button type="button" className="btn btn-soft h-9 bg-white px-3 text-xs"
+            <code className="rounded-lg bg-raised px-3 py-1.5 font-mono text-base font-bold tracking-wider">{state.password}</code>
+            <button type="button" className="btn btn-soft h-9 bg-raised px-3 text-xs"
               onClick={() => { void navigator.clipboard.writeText(state.password!); setCopied(true); }}>
               {copied ? "Copiada ✓" : "Copiar"}
             </button>

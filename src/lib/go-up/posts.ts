@@ -46,12 +46,12 @@ export const FORMAT: Record<PostFormat, string> = {
 
 export const POST_STATUS: Record<PostStatus, { label: string; cls: string; clientVisible: boolean }> = {
   ideia: { label: "Ideia", cls: "bg-tile text-muted", clientVisible: false },
-  producao: { label: "Em produção", cls: "bg-tint-orange text-[#b2451b]", clientVisible: false },
-  aprovacao: { label: "Aguardando aprovação", cls: "bg-tint-yellow text-[#8a6d00]", clientVisible: true },
+  producao: { label: "Em produção", cls: "bg-tint-orange text-orange-ink", clientVisible: false },
+  aprovacao: { label: "Aguardando aprovação", cls: "bg-tint-yellow text-warn", clientVisible: true },
   ajustes: { label: "Ajustes pedidos", cls: "bg-tint-red text-accent", clientVisible: true },
-  aprovado: { label: "Aprovado", cls: "bg-tint-green text-[#3c8a2e]", clientVisible: true },
+  aprovado: { label: "Aprovado", cls: "bg-tint-green text-ok", clientVisible: true },
   agendado: { label: "Agendado", cls: "bg-tint-blue text-primary", clientVisible: true },
-  publicado: { label: "Publicado", cls: "bg-tint-purple text-[#5b3db8]", clientVisible: true },
+  publicado: { label: "Publicado", cls: "bg-tint-purple text-violet", clientVisible: true },
 };
 
 /** Interações: curtidas + comentários + compartilhamentos + salvamentos. */

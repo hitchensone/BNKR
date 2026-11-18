@@ -56,7 +56,7 @@ export function LeadDetail({
               <p className="truncate text-sm text-muted">{meta || "Sem detalhes do contato"}</p>
             </div>
             {lead.estimated_value != null && (
-              <span className="pill hidden bg-tint-green text-[#3c8a2e] sm:inline-flex">{formatBRL(lead.estimated_value)}/mês</span>
+              <span className="pill hidden bg-tint-green text-ok sm:inline-flex">{formatBRL(lead.estimated_value)}/mês</span>
             )}
           </div>
         </WidgetGroup>
@@ -71,7 +71,7 @@ export function LeadDetail({
             <select name="stage" defaultValue={lead.stage} aria-label="Mover para a etapa" className="field h-11 w-auto text-sm">
               {LEAD_STAGES.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
             </select>
-            <button className="btn btn-primary h-11 px-4 text-sm">Mover</button>
+            <button className="btn btn-primary h-10 px-4 text-sm">Mover</button>
           </form>
         </Widget>
       </div>
@@ -106,7 +106,7 @@ export function LeadDetail({
               : "Diretrizes, propósitos, campanhas e resultados prováveis."}
           </p>
         </div>
-        <Link href={`/go-cl/${lead.id}/briefing`} className="btn btn-primary h-11 px-5 text-sm">
+        <Link href={`/go-cl/${lead.id}/briefing`} className="btn btn-primary h-10 px-5 text-sm">
           {briefing ? "Abrir briefing" : "Começar briefing"}
         </Link>
       </Widget>
@@ -122,7 +122,7 @@ export function LeadDetail({
             </p>
           </div>
           {briefing && !contracts.some((c) => c.status !== "cancelado") && (
-            <Link href={`/go-cl/${lead.id}/contrato`} className="btn btn-primary h-11 px-5 text-sm">Gerar contrato</Link>
+            <Link href={`/go-cl/${lead.id}/contrato`} className="btn btn-primary h-10 px-5 text-sm">Gerar contrato</Link>
           )}
         </div>
         {contracts.length > 0 && (
@@ -160,7 +160,7 @@ export function LeadDetail({
           {/* Histórico */}
           <WidgetGroup>
             <div className="widget flex items-center gap-4 p-3">
-              <Tile tint="blue" size="md">🕑</Tile>
+              <Tile tint="blue" size="md">⏰</Tile>
               <div className="flex-1">
                 <h2 className="text-lg font-bold">Histórico de contatos</h2>
                 <p className="text-sm text-muted">{interactions.length} registro{interactions.length === 1 ? "" : "s"}</p>

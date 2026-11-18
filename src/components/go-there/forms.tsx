@@ -11,7 +11,7 @@ function Feedback({ state }: { state: PortalState }) {
   if (!state || state.password) return null;
   return state.error
     ? <p role="alert" className="text-sm font-medium text-accent">{state.error}</p>
-    : <p role="status" className="text-sm font-medium text-[#3c8a2e]">{state.ok}</p>;
+    : <p role="status" className="text-sm font-medium text-ok">{state.ok}</p>;
 }
 
 function useResetOnOk(state: PortalState) {
@@ -115,8 +115,8 @@ export function AccessForm({ projectId, clientId }: { projectId: string; clientI
           <p className="font-semibold">{state.ok}</p>
           <p className="mt-1">Senha temporária (aparece só agora):</p>
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <code className="rounded-lg bg-white px-3 py-1.5 font-mono text-base font-bold tracking-wider">{state.password}</code>
-            <button type="button" className="btn btn-soft h-9 bg-white px-3 text-xs"
+            <code className="rounded-lg bg-raised px-3 py-1.5 font-mono text-base font-bold tracking-wider">{state.password}</code>
+            <button type="button" className="btn btn-soft h-9 bg-raised px-3 text-xs"
               onClick={() => { void navigator.clipboard.writeText(state.password!); setCopied(true); }}>
               {copied ? "Copiada ✓" : "Copiar"}
             </button>

@@ -8,6 +8,7 @@ Sistema modular da GO Bunker! Mídia e Tecnologia. Cada módulo é uma área do 
 | **GO UP** | Work OS: demandas, fluxo configurável, modelos, equipe, postagens e estatísticas | Pronto |
 | **GO GRAND** | Financeiro: lançamentos, recorrentes, indicadores e comparativos | Pronto |
 | **GO THERE** | Portal do cliente: etapas, mural, pedidos de arquivo, entregas e acessos | Pronto |
+| **AJUSTES** | Tema (Padrão, Dark, Just Glass, Glass Ish, Liquid Glass) e conta | Pronto |
 | **BUNKER CHAT** | Chat em tempo real (equipe, conversas diretas, cliente por projeto) e Assistente Bunker | Pronto |
 
 ## Stack
@@ -67,6 +68,11 @@ novo → abordado → cativando → briefing → proposta → negociação → g
   2. marca o lead como ganho
   3. gera o projeto inicial (GO UP)
   4. emite `contract.signed` (GO GRAND)
+
+## Visual
+
+- Tokens e temas em `src/app/globals.css` (atributo `data-theme` no `<html>`). O tema fica no perfil (`profiles.theme`) e no aparelho, aplicado antes de pintar a tela.
+- Ícones 3D: [Fluent Emoji 3D](https://github.com/microsoft/fluentui-emoji) da Microsoft (licença MIT), em `public/icons/3d`. Qualquer emoji passado para `<Tile>` ou `<Icon3D>` vira o ícone 3D quando existe.
 
 ## Assistente Bunker
 

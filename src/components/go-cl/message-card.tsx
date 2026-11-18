@@ -54,10 +54,10 @@ export function MessageCard({
           <h3 className="truncate font-semibold">{message.name}</h3>
           <p className="text-xs text-muted">{ch.label}</p>
         </div>
-        {message.recommended && <span className="pill bg-tint-green text-[#3c8a2e]">Etapa atual</span>}
+        {message.recommended && <span className="pill bg-tint-green text-ok">Etapa atual</span>}
       </header>
 
-      <div className="mt-3 rounded-[1.25rem] bg-white p-4 text-sm leading-relaxed shadow-[inset_0_2px_4px_rgb(42_55_104/0.04)]">
+      <div className="mt-3 rounded-[1.25rem] bg-raised p-4 text-sm leading-relaxed shadow-[inset_0_2px_4px_rgb(42_55_104/0.04)]">
         {message.subject && <p className="mb-2 font-semibold">{message.subject}</p>}
         <p className="whitespace-pre-line">{message.text}</p>
       </div>

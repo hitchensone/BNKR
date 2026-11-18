@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef } from "react";
 import type { Lead } from "@/lib/types";
 import type { FormState } from "@/app/(sistema)/go-cl/[id]/actions";
 import { CHANNEL, toLocalInput } from "./labels";
+import { Icon3D } from "@/components/icon3d";
 
 type Action = (state: FormState, formData: FormData) => Promise<FormState>;
 
@@ -12,7 +13,7 @@ function Feedback({ state }: { state: FormState }) {
   return state.error ? (
     <p role="alert" className="text-sm font-medium text-accent">{state.error}</p>
   ) : (
-    <p role="status" className="text-sm font-medium text-[#3c8a2e]">{state.ok}</p>
+    <p role="status" className="text-sm font-medium text-ok">{state.ok}</p>
   );
 }
 
@@ -54,8 +55,8 @@ export function LeadInfoForm({ lead, action }: { lead: Lead; action: Action }) {
           {(["frio", "morno", "quente"] as const).map((t) => (
             <label key={t} className="cursor-pointer">
               <input type="radio" name="temperature" value={t} defaultChecked={lead.temperature === t} className="peer sr-only" />
-              <span className="flex h-11 items-center justify-center gap-2 rounded-[var(--radius-tile)] bg-tile text-sm font-semibold transition peer-checked:bg-white peer-checked:shadow-[0_0_0_2px_var(--primary)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-primary">
-                {t === "frio" ? "❄️ Frio" : t === "morno" ? "🌤️ Morno" : "🔥 Quente"}
+              <span className="flex h-11 items-center justify-center gap-2 rounded-[var(--radius-tile)] bg-tile text-sm font-semibold transition peer-checked:bg-raised peer-checked:shadow-[0_0_0_2px_var(--primary)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-primary">
+                <Icon3D e={t === "frio" ? "❄️" : t === "morno" ? "🌤️" : "🔥"} />{t === "frio" ? "Frio" : t === "morno" ? "Morno" : "Quente"}
               </span>
             </label>
           ))}

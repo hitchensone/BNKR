@@ -54,7 +54,7 @@ export function RecurringList({
           <Link href="/go-grand" aria-label="Voltar ao financeiro" className="tile size-12 text-lg">←</Link>
           <Tile tint="yellow" size="lg">🔁</Tile>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Recorrentes</h1>
+            <h1 className="text-xl font-bold tracking-tight">Recorrentes</h1>
             <p className="text-sm text-muted">Contratos mensais, plataformas, IAs e assinaturas</p>
           </div>
         </Widget>

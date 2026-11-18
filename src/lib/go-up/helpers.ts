@@ -2,7 +2,7 @@ import type { Priority, Task } from "./types.ts";
 
 export const PRIORITY: Record<Priority, { label: string; cls: string; rank: number }> = {
   urgente: { label: "Urgente", cls: "bg-tint-red text-accent", rank: 0 },
-  alta: { label: "Alta", cls: "bg-tint-orange text-[#b2451b]", rank: 1 },
+  alta: { label: "Alta", cls: "bg-tint-orange text-orange-ink", rank: 1 },
   normal: { label: "Normal", cls: "bg-tile text-muted", rank: 2 },
   baixa: { label: "Baixa", cls: "bg-tile text-muted", rank: 3 },
 };

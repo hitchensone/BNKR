@@ -4,6 +4,7 @@ import { Tile, Widget } from "@/components/ui";
 import { requireStaff, todaySP } from "@/lib/data/session";
 import { listProjects } from "@/lib/data/portal";
 import { listMyTasks, listTaskCounts } from "@/lib/data/work";
+import { Icon3D } from "@/components/icon3d";
 
 export default async function GoUpPage() {
   const session = await requireStaff();
@@ -19,15 +20,15 @@ export default async function GoUpPage() {
         <Widget className="flex min-w-72 flex-1 flex-wrap items-center gap-4 p-3 pr-4">
           <Tile tint="blue" size="lg">🚀</Tile>
           <div className="min-w-40 flex-1">
-            <h1 className="text-2xl font-bold tracking-tight">GO UP</h1>
+            <h1 className="text-xl font-bold tracking-tight">GO UP</h1>
             <p className="text-sm text-muted">Projetos, demandas e fluxos da agência</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Link href="/go-up/posts" className="btn btn-primary h-11 px-4 text-sm">📅 Postagens</Link>
+            <Link href="/go-up/posts" className="btn btn-primary h-10 px-4 text-sm"><Icon3D e="📅" /> Postagens</Link>
           {isAdmin && (
             <>
-              <Link href="/go-up/config" className="btn btn-soft h-11 px-4 text-sm">⚙️ Fluxo e modelos</Link>
-              <Link href="/go-up/equipe" className="btn btn-soft h-11 px-4 text-sm">👥 Equipe</Link>
+              <Link href="/go-up/config" className="btn btn-soft h-10 px-4 text-sm"><Icon3D e="⚙️" /> Fluxo e modelos</Link>
+              <Link href="/go-up/equipe" className="btn btn-soft h-10 px-4 text-sm"><Icon3D e="👥" /> Equipe</Link>
             </>
           )}
           </div>
@@ -37,7 +38,7 @@ export default async function GoUpPage() {
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-muted">Minhas demandas</p>
             <p className="text-2xl font-bold">{mine.length}</p>
-            <p className="text-xs text-muted">{myLate ? <span className="text-accent">⚠ {myLate} atrasada{myLate > 1 ? "s" : ""}</span> : "Nada atrasado"}</p>
+            <p className="text-xs text-muted">{myLate ? <span className="text-accent"><Icon3D e="⚠" /> {myLate} atrasada{myLate > 1 ? "s" : ""}</span> : "Nada atrasado"}</p>
           </div>
         </Link>
       </div>
@@ -60,7 +61,7 @@ export default async function GoUpPage() {
                 <ProgressBar value={pct} />
                 <div className="flex flex-wrap items-center gap-2 text-sm">
                   <span className="text-muted">{c.total ? `${done} de ${c.total} demandas` : "Sem demandas ainda"}</span>
-                  {c.late > 0 && <span className="pill ml-auto bg-tint-red text-accent">⚠ {c.late} atrasada{c.late > 1 ? "s" : ""}</span>}
+                  {c.late > 0 && <span className="pill ml-auto bg-tint-red text-accent"><Icon3D e="⚠" /> {c.late} atrasada{c.late > 1 ? "s" : ""}</span>}
                 </div>
               </Link>
             </li>

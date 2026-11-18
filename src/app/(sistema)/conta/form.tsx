@@ -11,7 +11,7 @@ export function PasswordForm() {
       <input name="confirm" type="password" required minLength={8} autoComplete="new-password" placeholder="Repita a nova senha" aria-label="Repita a nova senha" className="field" />
       <button disabled={pending} className="btn btn-primary">{pending ? "Salvando..." : "Trocar senha"}</button>
       {state?.error && <p role="alert" className="text-sm font-medium text-accent">{state.error}</p>}
-      {state?.ok && <p role="status" className="text-sm font-medium text-[#3c8a2e]">{state.ok}</p>}
+      {state?.ok && <p role="status" className="text-sm font-medium text-ok">{state.ok}</p>}
     </form>
   );
 }

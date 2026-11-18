@@ -6,6 +6,7 @@ import { requireStaff, todaySP } from "@/lib/data/session";
 import { listProjects } from "@/lib/data/portal";
 import { listPosts, listProjectMedia } from "@/lib/data/posts";
 import { monthLabel, monthOf, monthRange, shiftMonth } from "@/lib/go-grand/summary";
+import { Icon3D } from "@/components/icon3d";
 
 export default async function PostsPage({ searchParams }: PageProps<"/go-up/posts">) {
   await requireStaff();
@@ -33,10 +34,10 @@ export default async function PostsPage({ searchParams }: PageProps<"/go-up/post
           <Link href="/go-up" aria-label="Voltar ao GO UP" className="tile size-12 text-lg">←</Link>
           <Tile tint="purple" size="lg">📅</Tile>
           <div className="min-w-40 flex-1">
-            <h1 className="text-2xl font-bold tracking-tight">Postagens</h1>
+            <h1 className="text-xl font-bold tracking-tight">Postagens</h1>
             <p className="text-sm text-muted">Calendário, aprovação e resultados dos clientes</p>
           </div>
-          <Link href={`/go-up/posts/estatisticas${projectId ? `?projeto=${projectId}` : ""}`} className="btn btn-soft h-11 px-4 text-sm">📊 Estatísticas</Link>
+          <Link href={`/go-up/posts/estatisticas${projectId ? `?projeto=${projectId}` : ""}`} className="btn btn-soft h-10 px-4 text-sm"><Icon3D e="📊" /> Estatísticas</Link>
         </Widget>
         <Widget className="flex w-full items-center justify-between gap-2 p-3 sm:w-auto">
           <Link href={q(shiftMonth(month, -1))} aria-label="Mês anterior" className="tile size-11">←</Link>
@@ -47,11 +48,11 @@ export default async function PostsPage({ searchParams }: PageProps<"/go-up/post
 
       <form className="flex flex-wrap items-center gap-2">
         <input type="hidden" name="mes" value={month} />
-        <select name="projeto" defaultValue={projectId ?? ""} aria-label="Filtrar por projeto" className="field w-auto min-w-64 bg-white">
+        <select name="projeto" defaultValue={projectId ?? ""} aria-label="Filtrar por projeto" className="field w-auto min-w-64 bg-raised">
           <option value="">Todos os clientes</option>
           {active.map((p) => <option key={p.id} value={p.id}>{label(p)}</option>)}
         </select>
-        <button className="btn btn-soft bg-white">Filtrar</button>
+        <button className="btn btn-soft bg-raised">Filtrar</button>
       </form>
 
       <WidgetGroup>

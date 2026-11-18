@@ -1,6 +1,6 @@
 import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
-import type { ChatKind, ChatMessage, ChatSummary } from "@/lib/chat/helpers";
+import { initialsOf, type ChatKind, type ChatMessage, type ChatSummary } from "@/lib/chat/helpers";
 import type { StaffMember } from "@/lib/go-up/types";
 
 // Camada de dados do BUNKER CHAT. O RLS decide quem vê cada conversa.
@@ -38,7 +38,8 @@ export const listChats = cache(async (isStaff: boolean): Promise<ChatSummary[]> 
       return [{ ...base, title: "Assistente Bunker", subtitle: "Sua conversa particular", icon: "🤖", last_author: r.last_author === "Assistente Bunker" ? "Assistente" : r.last_author }];
     }
     if (r.kind === "direto") {
-      return [{ ...base, title: staffMap.get(r.other_user ?? "") || "Conversa direta", subtitle: "Conversa direta", icon: "👤" }];
+      const person = staffMap.get(r.other_user ?? "") || "Conversa direta";
+      return [{ ...base, title: person, subtitle: "Conversa direta", icon: initialsOf(person) }];
     }
     const p = projectMap.get(r.project_id ?? "");
     if (!p) return [];

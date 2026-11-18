@@ -79,7 +79,7 @@ export function MonthChart({ data, current }: { data: MonthPoint[]; current: str
         </svg>
 
         {h && hover != null && (
-          <div className="pointer-events-none absolute top-2 z-10 w-52 rounded-2xl bg-white p-3 text-sm shadow-[0_12px_30px_-10px_rgb(42_55_104/0.35)]"
+          <div className="pointer-events-none absolute top-2 z-10 w-52 rounded-2xl bg-raised p-3 text-sm shadow-[0_12px_30px_-10px_rgb(42_55_104/0.35)]"
             style={{ left: `clamp(0px, calc(${((padL + band * hover + band / 2) / W) * 100}% - 6.5rem), calc(100% - 13rem))` }}>
             <p className="mb-1 font-bold">{monthLabel(h.month)}</p>
             <p className="flex justify-between gap-3"><span className="flex items-center gap-2"><span className="size-2.5 rounded-[3px]" style={{ background: COLORS.entradas }} />Entradas</span><span className="font-semibold">{brl.format(h.entradas)}</span></p>

@@ -48,7 +48,7 @@ export function TaskBoard({
   }
 
   return (
-    <div className="-mx-4 flex gap-5 overflow-x-auto px-4 pb-6 sm:-mx-6 sm:px-6">
+    <div className="-mx-3 -mb-6 grid auto-cols-[minmax(15rem,1fr)] grid-flow-col gap-4 overflow-x-auto px-3 pb-10">
       {columns.map((col) => {
         const items = col.is_done
           ? optimistic.filter((t) => t.column_id === col.id)
@@ -66,12 +66,12 @@ export function TaskBoard({
               setDragging(null);
               if (id) move(id, col.id);
             }}
-            className={cx("flex w-[18.5rem] shrink-0 flex-col rounded-[2rem] p-2 transition", over === col.id && dragging ? "bg-white/70 ring-2 ring-primary" : "bg-white/35")}
+            className={cx("flex min-w-0 flex-col rounded-[1.75rem] p-2 transition", over === col.id && dragging ? "bg-raised/70 ring-2 ring-primary" : "bg-raised/35")}
           >
             <header className="flex items-center gap-2 px-2 py-2">
               <span className="size-3 rounded-full" style={{ background: tintDot[col.tint] }} />
               <h2 className="flex-1 font-bold">{col.name}</h2>
-              <span className="pill bg-white text-muted">{items.length}</span>
+              <span className="pill bg-raised text-muted">{items.length}</span>
             </header>
             <ul className="flex min-h-24 flex-col gap-2">
               {items.map((t) => {
@@ -102,7 +102,7 @@ export function TaskBoard({
                       {subs && subs.total > 0 && (
                         <span className="pill h-6 bg-tile px-2 text-[11px] text-muted">☑ {subs.done}/{subs.total}</span>
                       )}
-                      {t.visible_to_client && <span className="pill h-6 bg-tint-purple px-2 text-[11px] text-[#5b3db8]" title="Cliente vê no GO THERE">👁</span>}
+                      {t.visible_to_client && <span className="pill h-6 bg-tint-purple px-2 text-[11px] text-violet" title="Cliente vê no GO THERE">👁</span>}
                       <span className="ml-auto grid size-7 place-items-center rounded-full bg-tint-blue text-[10px] font-bold text-primary"
                         title={t.assignee_id ? names.get(t.assignee_id) ?? "Responsável" : "Sem responsável"}>
                         {t.assignee_id ? initials(names.get(t.assignee_id)) : "–"}
@@ -120,7 +120,7 @@ export function TaskBoard({
                 );
               })}
               {items.length === 0 && (
-                <li className="grid h-20 place-items-center rounded-[1.5rem] border-2 border-dashed border-white/80 text-xs text-muted">
+                <li className="grid h-20 place-items-center rounded-[1.5rem] border-2 border-dashed border-raised/80 text-xs text-muted">
                   Solte aqui
                 </li>
               )}

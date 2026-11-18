@@ -120,11 +120,11 @@ export function BriefingForm({
             {goals.map((g, i) => (
               <div key={i} className="grid grid-cols-1 gap-2 rounded-[1.5rem] bg-tile/50 p-2 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
                 <input value={g.objetivo} onChange={(e) => setGoals(patch(goals, i, { objetivo: e.target.value }))}
-                  placeholder="Objetivo (ex.: mais agendamentos)" aria-label={`Objetivo ${i + 1}`} className="field bg-white" />
+                  placeholder="Objetivo (ex.: mais agendamentos)" aria-label={`Objetivo ${i + 1}`} className="field bg-raised" />
                 <input value={g.metrica ?? ""} onChange={(e) => setGoals(patch(goals, i, { metrica: e.target.value }))}
-                  placeholder="Métrica" aria-label={`Métrica ${i + 1}`} className="field bg-white" />
+                  placeholder="Métrica" aria-label={`Métrica ${i + 1}`} className="field bg-raised" />
                 <input value={g.meta ?? ""} onChange={(e) => setGoals(patch(goals, i, { meta: e.target.value }))}
-                  placeholder="Meta (ex.: +30%)" aria-label={`Meta ${i + 1}`} className="field bg-white" />
+                  placeholder="Meta (ex.: +30%)" aria-label={`Meta ${i + 1}`} className="field bg-raised" />
                 <RemoveButton label={`Remover meta ${i + 1}`} onClick={() => setGoals(goals.filter((_, j) => j !== i))} />
               </div>
             ))}
@@ -137,12 +137,12 @@ export function BriefingForm({
             <div key={i} className="grid grid-cols-[minmax(0,1fr)_auto] gap-2 rounded-[1.5rem] bg-tile/50 p-2 sm:grid-cols-[6rem_minmax(0,1fr)_10rem_auto]">
               <input type="number" min={1} value={d.quantidade ?? ""} aria-label={`Quantidade ${i + 1}`}
                 onChange={(e) => setDeliverables(patch(deliverables, i, { quantidade: e.target.value ? Math.max(1, Number(e.target.value)) : undefined }))}
-                placeholder="Qtd." className="field col-span-2 bg-white sm:col-span-1" />
+                placeholder="Qtd." className="field col-span-2 bg-raised sm:col-span-1" />
               <input value={d.item} onChange={(e) => setDeliverables(patch(deliverables, i, { item: e.target.value }))}
-                placeholder="Entrega (ex.: posts para o feed)" aria-label={`Entrega ${i + 1}`} className="field col-span-2 bg-white sm:col-span-1" />
+                placeholder="Entrega (ex.: posts para o feed)" aria-label={`Entrega ${i + 1}`} className="field col-span-2 bg-raised sm:col-span-1" />
               <select value={d.periodicidade ?? ""} aria-label={`Periodicidade ${i + 1}`}
                 onChange={(e) => setDeliverables(patch(deliverables, i, { periodicidade: e.target.value || undefined }))}
-                className="field bg-white">
+                className="field bg-raised">
                 <option value="">Sem período</option>
                 {PERIODS.map((p) => <option key={p} value={p}>{p}</option>)}
               </select>
@@ -157,19 +157,19 @@ export function BriefingForm({
             <div key={i} className="flex flex-col gap-2 rounded-[1.5rem] bg-tile/50 p-2">
               <div className="flex gap-2">
                 <input value={c.nome} onChange={(e) => setCampaigns(patch(campaigns, i, { nome: e.target.value }))}
-                  placeholder="Nome da campanha" aria-label={`Campanha ${i + 1}`} className="field bg-white" />
+                  placeholder="Nome da campanha" aria-label={`Campanha ${i + 1}`} className="field bg-raised" />
                 <RemoveButton label={`Remover campanha ${i + 1}`} onClick={() => setCampaigns(campaigns.filter((_, j) => j !== i))} />
               </div>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 <input value={c.canais?.join(", ") ?? ""} aria-label={`Canais da campanha ${i + 1}`}
                   onChange={(e) => setCampaigns(patch(campaigns, i, { canais: e.target.value.split(",").map((x) => x.trimStart()) }))}
-                  placeholder="Canais (Instagram, Meta Ads...)" className="field bg-white" />
+                  placeholder="Canais (Instagram, Meta Ads...)" className="field bg-raised" />
                 <input value={c.periodo ?? ""} onChange={(e) => setCampaigns(patch(campaigns, i, { periodo: e.target.value }))}
-                  placeholder="Período (ex.: dezembro)" aria-label={`Período da campanha ${i + 1}`} className="field bg-white" />
+                  placeholder="Período (ex.: dezembro)" aria-label={`Período da campanha ${i + 1}`} className="field bg-raised" />
               </div>
               <textarea value={c.descricao ?? ""} rows={2} aria-label={`Descrição da campanha ${i + 1}`}
                 onChange={(e) => setCampaigns(patch(campaigns, i, { descricao: e.target.value }))}
-                placeholder="Ideia central, oferta, público" className="field h-auto bg-white py-3" />
+                placeholder="Ideia central, oferta, público" className="field h-auto bg-raised py-3" />
             </div>
           ))}
           <AddButton onClick={() => setCampaigns([...campaigns, { nome: "", canais: [] }])}>Adicionar campanha</AddButton>
@@ -216,7 +216,7 @@ export function BriefingForm({
           <div role="radiogroup" aria-label="Situação do briefing" className="grid grid-cols-2 gap-1 rounded-[var(--radius-tile)] bg-tile p-1">
             {(["rascunho", "validado"] as const).map((s) => (
               <button key={s} type="button" role="radio" aria-checked={status === s} onClick={() => setStatus(s)}
-                className={`h-10 rounded-[0.875rem] text-sm font-semibold transition ${status === s ? "bg-white text-foreground shadow-sm" : "text-muted"}`}>
+                className={`h-10 rounded-[0.875rem] text-sm font-semibold transition ${status === s ? "bg-raised text-foreground shadow-sm" : "text-muted"}`}>
                 {s === "rascunho" ? "Rascunho" : "Validado"}
               </button>
             ))}
@@ -226,7 +226,7 @@ export function BriefingForm({
           </p>
           <button disabled={pending} className="btn btn-primary w-full">{pending ? "Salvando..." : "Salvar briefing"}</button>
           {state?.error && <p role="alert" className="text-sm font-medium text-accent">{state.error}</p>}
-          {state?.ok && <p role="status" className="text-sm font-medium text-[#3c8a2e]">{state.ok}</p>}
+          {state?.ok && <p role="status" className="text-sm font-medium text-ok">{state.ok}</p>}
         </div>
       </aside>
     </form>

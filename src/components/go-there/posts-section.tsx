@@ -4,6 +4,7 @@ import { FORMAT, NETWORK, POST_STATUS, localParts, postStats } from "@/lib/go-up
 import { ReviewForm } from "../go-up/post-forms";
 import { StatsSummary } from "../go-up/post-views";
 import { Bridge, Tile, WidgetGroup } from "../ui";
+import { Icon3D } from "@/components/icon3d";
 
 const when = (iso: string | null) => {
   if (!iso) return "Sem data";
@@ -47,13 +48,13 @@ export function PortalPosts({ posts, isStaff, today }: { posts: PostWithProject[
                   </div>
                   <span className={`pill ${POST_STATUS[p.status].cls}`}>{POST_STATUS[p.status].label}</span>
                 </div>
-                {p.caption && <p className="max-h-40 overflow-y-auto whitespace-pre-line rounded-[1.25rem] bg-white p-3 text-sm">{p.caption}</p>}
+                {p.caption && <p className="max-h-40 overflow-y-auto whitespace-pre-line rounded-[1.25rem] bg-raised p-3 text-sm">{p.caption}</p>}
                 {p.status === "ajustes" && p.client_feedback && (
                   <p className="rounded-[1.25rem] bg-tint-red p-3 text-sm"><span className="font-semibold">Ajuste pedido:</span> {p.client_feedback}</p>
                 )}
                 {p.status === "aprovacao" && !isStaff && <ReviewForm postId={p.id} />}
                 {isStaff && (
-                  <Link href={`/go-up/posts/${p.id}`} className="btn btn-soft h-10 bg-white px-4 text-sm">Abrir no GO UP</Link>
+                  <Link href={`/go-up/posts/${p.id}`} className="btn btn-soft h-10 bg-raised px-4 text-sm">Abrir no GO UP</Link>
                 )}
               </li>
             ))}
@@ -85,7 +86,7 @@ export function PortalPosts({ posts, isStaff, today }: { posts: PostWithProject[
         )}
         {stats.published > 0 && (
           <div className="flex flex-col gap-3">
-            <h2 className="px-2 font-bold">📈 Resultados das publicações</h2>
+            <h2 className="px-2 font-bold"><Icon3D e="📈" /> Resultados das publicações</h2>
             <StatsSummary stats={stats} />
           </div>
         )}

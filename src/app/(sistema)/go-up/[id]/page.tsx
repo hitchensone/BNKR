@@ -8,6 +8,7 @@ import { requireStaff, todaySP } from "@/lib/data/session";
 import { getProject } from "@/lib/data/portal";
 import { createClient } from "@/lib/supabase/server";
 import { listColumns, listProjectTasks, listStaff, listTemplates } from "@/lib/data/work";
+import { Icon3D } from "@/components/icon3d";
 
 export default async function ProjectBoardPage({ params }: PageProps<"/go-up/[id]">) {
   await requireStaff();
@@ -43,7 +44,7 @@ export default async function ProjectBoardPage({ params }: PageProps<"/go-up/[id
             <p className="truncate text-xs font-semibold uppercase tracking-wider text-muted">{project.client?.trade_name || project.client?.name}</p>
             <h1 className="truncate text-2xl font-bold tracking-tight">{project.name}</h1>
           </div>
-          <Link href={`/go-there/${id}`} className="btn btn-soft h-11 px-4 text-sm">🛰️ Ver no GO THERE</Link>
+          <Link href={`/go-there/${id}`} className="btn btn-soft h-10 px-4 text-sm"><Icon3D e="🛰️" /> Ver no GO THERE</Link>
         </div>
       </WidgetGroup>
 
@@ -56,7 +57,7 @@ export default async function ProjectBoardPage({ params }: PageProps<"/go-up/[id
         <NewTaskForm projectId={id} columns={columns} staff={staff} stages={stages ?? []} />
         {templates.length > 0 && (
           <details className="border-t border-border pt-3">
-            <summary className="cursor-pointer px-1 text-sm font-semibold text-muted">⚡ Criar etapas e demandas a partir de um modelo</summary>
+            <summary className="cursor-pointer px-1 text-sm font-semibold text-muted"><Icon3D e="⚡" /> Criar etapas e demandas a partir de um modelo</summary>
             <div className="mt-3"><ApplyTemplateForm projectId={id} templates={templates} today={today} /></div>
           </details>
         )}

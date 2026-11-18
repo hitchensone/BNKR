@@ -91,7 +91,7 @@ export function ContractForm({
             <div role="radiogroup" aria-label="Tipo de cobrança" className="grid grid-cols-3 gap-1 rounded-[var(--radius-tile)] bg-tile p-1">
               {([["mensal", "Mensal"], ["unico", "Valor único"], ["misto", "Mensal + único"]] as const).map(([id, label]) => (
                 <button key={id} type="button" role="radio" aria-checked={billing === id} onClick={() => setBilling(id)}
-                  className={`h-10 rounded-[0.875rem] text-sm font-semibold transition ${billing === id ? "bg-white shadow-sm" : "text-muted"}`}>
+                  className={`h-10 rounded-[0.875rem] text-sm font-semibold transition ${billing === id ? "bg-raised shadow-sm" : "text-muted"}`}>
                   {label}
                 </button>
               ))}

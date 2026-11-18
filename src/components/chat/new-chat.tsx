@@ -26,9 +26,9 @@ export function NewChat({ staff }: { staff: { user_id: string; full_name: string
 
   return (
     <div ref={box} className="relative">
-      <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Nova conversa" className="btn btn-primary size-11 p-0 text-xl">+</button>
+      <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Nova conversa" className="btn btn-primary size-10 p-0 text-lg">+</button>
       {open && (
-        <div className="widget absolute right-0 top-13 z-30 flex w-[min(20rem,calc(100vw-3rem))] flex-col gap-4 p-4 shadow-[0_24px_60px_-20px_rgb(42_55_104/0.45)]">
+        <div className="widget absolute right-0 top-12 z-30 flex w-[min(20rem,calc(100vw-3rem))] flex-col gap-4 p-4 shadow-[0_24px_60px_-20px_rgb(42_55_104/0.45)]">
           <form action={dmAction} className="flex flex-col gap-2">
             <p className="px-1 text-xs font-semibold uppercase tracking-wider text-muted">Conversa direta</p>
             {staff.length ? (
@@ -37,7 +37,7 @@ export function NewChat({ staff }: { staff: { user_id: string; full_name: string
                   <option value="" disabled>Escolha alguém da equipe</option>
                   {staff.map((s) => <option key={s.user_id} value={s.user_id}>{s.full_name || "Sem nome"}</option>)}
                 </select>
-                <button disabled={dmPending} className="btn btn-soft h-11 text-sm">{dmPending ? "Abrindo..." : "Abrir conversa"}</button>
+                <button disabled={dmPending} className="btn btn-soft h-10 text-sm">{dmPending ? "Abrindo..." : "Abrir conversa"}</button>
               </>
             ) : (
               <p className="px-1 text-sm text-muted">Ainda não há mais ninguém na equipe. Convide em GO UP › Equipe.</p>
@@ -49,7 +49,7 @@ export function NewChat({ staff }: { staff: { user_id: string; full_name: string
             <p className="px-1 text-xs font-semibold uppercase tracking-wider text-muted">Novo canal da equipe</p>
             <input name="name" required placeholder="ex.: criação" className="field" aria-label="Nome do canal" />
             <input name="description" placeholder="Sobre o que é (opcional)" className="field" aria-label="Descrição do canal" />
-            <button disabled={chPending} className="btn btn-soft h-11 text-sm">{chPending ? "Criando..." : "Criar canal"}</button>
+            <button disabled={chPending} className="btn btn-soft h-10 text-sm">{chPending ? "Criando..." : "Criar canal"}</button>
             {chState?.error && <p role="alert" className="text-sm text-accent">{chState.error}</p>}
           </form>
         </div>

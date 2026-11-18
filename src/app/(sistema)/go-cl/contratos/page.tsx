@@ -16,7 +16,7 @@ export default async function ContractsPage() {
           <Link href="/go-cl" aria-label="Voltar ao funil" className="tile size-12 text-lg">←</Link>
           <Tile tint="green" size="lg">📄</Tile>
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">Contratos</h1>
+            <h1 className="text-xl font-bold tracking-tight">Contratos</h1>
             <p className="text-sm text-muted">{contracts.length} no total</p>
           </div>
         </div>

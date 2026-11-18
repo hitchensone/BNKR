@@ -3,11 +3,12 @@
 import { useActionState } from "react";
 import type { ContractStatus } from "@/lib/types";
 import type { SignState } from "@/app/(sistema)/go-cl/contratos/actions";
+import { Icon3D } from "@/components/icon3d";
 
 export function PrintButton() {
   return (
-    <button type="button" onClick={() => window.print()} className="btn btn-soft h-11 px-4 text-sm">
-      🖨️ Imprimir ou salvar PDF
+    <button type="button" onClick={() => window.print()} className="btn btn-soft h-10 px-4 text-sm">
+      <Icon3D e="🖨️" /> Imprimir ou salvar PDF
     </button>
   );
 }
@@ -37,9 +38,9 @@ export function SignForm({
 }
 
 const STATUS: Record<ContractStatus, { label: string; cls: string }> = {
-  rascunho: { label: "Rascunho", cls: "bg-tint-yellow text-[#8a6d00]" },
+  rascunho: { label: "Rascunho", cls: "bg-tint-yellow text-warn" },
   enviado: { label: "Enviado", cls: "bg-tint-blue text-primary" },
-  assinado: { label: "Assinado", cls: "bg-tint-green text-[#3c8a2e]" },
+  assinado: { label: "Assinado", cls: "bg-tint-green text-ok" },
   cancelado: { label: "Cancelado", cls: "bg-tile text-muted" },
 };
 

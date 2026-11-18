@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { listTime, type ChatSummary } from "@/lib/chat/helpers";
 import { createClient } from "@/lib/supabase/client";
 import { cx } from "../ui";
+import { Icon3D } from "@/components/icon3d";
 
 /**
  * Lista de conversas. Escuta mensagens novas de todas as conversas que a
@@ -63,8 +64,8 @@ export function ChatList({
           aria-current={active ? "page" : undefined}
           className={cx("flex items-center gap-3 rounded-[1.5rem] p-2 pr-3 transition", active ? "bg-tint-blue" : "hover:bg-tile/70")}
         >
-          <span className={cx("tile size-11 shrink-0 text-lg", c.kind === "canal" && "font-bold text-primary", c.kind === "projeto" ? "bg-tint-purple" : c.kind === "direto" ? "bg-tint-green" : "bg-tint-blue")}>
-            {c.icon}
+          <span className={cx("tile size-10 shrink-0 text-lg", c.kind === "canal" && "font-bold text-primary", /^[A-Z?]{1,3}$/.test(c.icon) && "text-xs font-bold text-ok", c.kind === "projeto" ? "bg-tint-purple" : c.kind === "direto" ? "bg-tint-green" : "bg-tint-blue")}>
+            <Icon3D e={c.icon} />
           </span>
           <span className="min-w-0 flex-1">
             <span className="flex items-baseline gap-2">
@@ -97,7 +98,7 @@ export function ChatList({
   return (
     <aside className={cx("widget flex min-h-0 min-w-0 flex-1 flex-col p-2 lg:w-[22rem] lg:flex-none", activeId ? "hidden lg:flex" : "flex")} aria-label="Conversas">
       <div className="flex items-center gap-2 p-2">
-        <span className="tile size-11 bg-tint-green text-xl">💬</span>
+        <span className="tile size-10 bg-tint-green text-lg"><Icon3D e="💬" /></span>
         <h1 className="flex-1 text-xl font-bold tracking-tight">Bunker Chat</h1>
         {actions}
       </div>

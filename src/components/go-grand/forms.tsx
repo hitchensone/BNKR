@@ -12,7 +12,7 @@ function KindToggle({ kind, onChange }: { kind: Kind; onChange: (k: Kind) => voi
     <div role="radiogroup" aria-label="Tipo" className="grid grid-cols-2 gap-1 rounded-[var(--radius-tile)] bg-tile p-1">
       {(["entrada", "saida"] as const).map((k) => (
         <button key={k} type="button" role="radio" aria-checked={kind === k} onClick={() => onChange(k)}
-          className={`h-10 rounded-[0.875rem] text-sm font-semibold transition ${kind === k ? "bg-white shadow-sm" : "text-muted"}`}>
+          className={`h-10 rounded-[0.875rem] text-sm font-semibold transition ${kind === k ? "bg-raised shadow-sm" : "text-muted"}`}>
           {k === "entrada" ? "↓ Entrada" : "↑ Saída"}
         </button>
       ))}
@@ -35,7 +35,7 @@ function Feedback({ state }: { state: GrandFormState }) {
   if (!state) return null;
   return state.error
     ? <p role="alert" className="text-sm font-medium text-accent">{state.error}</p>
-    : <p role="status" className="text-sm font-medium text-[#3c8a2e]">{state.ok}</p>;
+    : <p role="status" className="text-sm font-medium text-ok">{state.ok}</p>;
 }
 
 function useResetOnOk(state: GrandFormState) {

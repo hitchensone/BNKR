@@ -22,7 +22,7 @@ export default async function MyTasksPage() {
         <Link href="/go-up" aria-label="Voltar ao GO UP" className="tile size-12 text-lg">←</Link>
         <Tile tint="green" size="lg">🙋</Tile>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Minhas demandas</h1>
+          <h1 className="text-xl font-bold tracking-tight">Minhas demandas</h1>
           <p className="text-sm text-muted">{tasks.length} em aberto com você, em todos os projetos</p>
         </div>
       </Widget>
@@ -32,7 +32,7 @@ export default async function MyTasksPage() {
         if (!list.length) return null;
         return (
           <section key={g.id} className="flex flex-col gap-3">
-            <h2 className="flex items-center gap-2 px-2 font-bold"><span aria-hidden>{g.icon}</span>{g.title}<span className="pill bg-white text-muted">{list.length}</span></h2>
+            <h2 className="flex items-center gap-2 px-2 font-bold"><span aria-hidden>{g.icon}</span>{g.title}<span className="pill bg-raised text-muted">{list.length}</span></h2>
             <ul className="widget flex flex-col gap-1 p-2">
               {list.map((t) => (
                 <li key={t.id}>

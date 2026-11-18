@@ -9,6 +9,7 @@ import {
 import { Bridge, Tile, Widget, WidgetGroup, type Tint } from "../ui";
 import { MonthChart } from "./month-chart";
 import { TransactionForm } from "./forms";
+import { Icon3D } from "@/components/icon3d";
 
 const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const day = (iso: string) => `${iso.slice(8, 10)}/${iso.slice(5, 7)}`;
@@ -30,7 +31,7 @@ function Trend({ pct, inverse }: { pct: number | null; inverse?: boolean }) {
   if (pct == null) return <>sem base no mês anterior</>;
   const good = inverse ? pct <= 0 : pct >= 0;
   return (
-    <span className={good ? "text-[#3c8a2e]" : "text-accent"}>
+    <span className={good ? "text-ok" : "text-accent"}>
       {pct >= 0 ? "▲" : "▼"} {Math.abs(pct).toLocaleString("pt-BR")}% vs mês anterior
     </span>
   );
@@ -70,10 +71,10 @@ export function GrandDashboard({
         <Widget className="flex min-w-72 flex-1 flex-wrap items-center gap-4 p-3 pr-4">
           <Tile tint="yellow" size="lg">💰</Tile>
           <div className="min-w-40 flex-1">
-            <h1 className="text-2xl font-bold tracking-tight">GO GRAND</h1>
+            <h1 className="text-xl font-bold tracking-tight">GO GRAND</h1>
             <p className="text-sm text-muted">Financeiro da agência</p>
           </div>
-          <Link href="/go-grand/recorrentes" className="btn btn-soft h-11 px-4 text-sm">🔁 Recorrentes</Link>
+          <Link href="/go-grand/recorrentes" className="btn btn-soft h-10 px-4 text-sm"><Icon3D e="🔁" /> Recorrentes</Link>
         </Widget>
         <Widget className="flex w-full items-center justify-between gap-2 p-3 sm:w-auto">
           <Link href={`/go-grand?mes=${shiftMonth(month, -1)}`} aria-label="Mês anterior" className="tile size-11">←</Link>
@@ -92,9 +93,9 @@ export function GrandDashboard({
         <Kpi icon={s.resultado >= 0 ? "📈" : "📉"} tint={s.resultado >= 0 ? "green" : "red"} label="Resultado" value={s.resultado}
           note={s.receitas ? `Margem de ${Math.round((s.resultado / s.receitas) * 100)}%` : "Receitas pagas − despesas pagas"} />
         <Kpi icon="⏳" tint="purple" label="A receber" value={s.aReceber}
-          note={s.vencidosReceber ? <span className="text-accent">⚠ {brl.format(s.vencidosReceber)} vencido</span> : "Nada vencido"} />
+          note={s.vencidosReceber ? <span className="text-accent"><Icon3D e="⚠" /> {brl.format(s.vencidosReceber)} vencido</span> : "Nada vencido"} />
         <Kpi icon="🧾" tint="yellow" label="A pagar" value={s.aPagar}
-          note={s.vencidosPagar ? <span className="text-accent">⚠ {brl.format(s.vencidosPagar)} vencido</span> : "Nada vencido"} />
+          note={s.vencidosPagar ? <span className="text-accent"><Icon3D e="⚠" /> {brl.format(s.vencidosPagar)} vencido</span> : "Nada vencido"} />
       </div>
       <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <Kpi icon="🔁" tint="blue" label="Receita recorrente" value={rec.mrr} note="Contratos mensais ativos" />
@@ -172,7 +173,7 @@ export function GrandDashboard({
                     </p>
                   </div>
                   <p className="font-bold tabular-nums">{t.kind === "entrada" ? "+" : "−"} {brl.format(t.amount)}</p>
-                  <span className={`pill ${st === "pago" ? "bg-tint-green text-[#3c8a2e]" : st === "vencido" ? "bg-tint-red text-accent" : "bg-tile text-muted"}`}>
+                  <span className={`pill ${st === "pago" ? "bg-tint-green text-ok" : st === "vencido" ? "bg-tint-red text-accent" : "bg-tile text-muted"}`}>
                     {st === "pago" ? (t.kind === "entrada" ? "✓ Recebido" : "✓ Pago") : st === "vencido" ? "⚠ Vencido" : "Previsto"}
                   </span>
                   <form action={toggleAction}>

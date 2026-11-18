@@ -25,7 +25,7 @@ export default async function PostStatsPage({ searchParams }: PageProps<"/go-up/
         <Link href="/go-up/posts" aria-label="Voltar às postagens" className="tile size-12 text-lg">←</Link>
         <Tile tint="blue" size="lg">📊</Tile>
         <div className="min-w-40 flex-1">
-          <h1 className="text-2xl font-bold tracking-tight">Estatísticas de postagens</h1>
+          <h1 className="text-xl font-bold tracking-tight">Estatísticas de postagens</h1>
           <p className="text-sm text-muted">Últimos {days} dias, posts publicados</p>
         </div>
         <form className="flex flex-wrap items-center gap-2">

@@ -10,19 +10,20 @@ import { AccessForm, RequestForm, StageForm, UpdateForm } from "./forms";
 import { Uploader } from "./uploader";
 import { PortalPosts } from "./posts-section";
 import type { PostWithProject } from "@/lib/data/posts";
+import { Icon3D } from "@/components/icon3d";
 
 const br = (iso: string | null) => (iso ? iso.slice(0, 10).split("-").reverse().join("/") : "");
 
 export const PROJECT_STATUS: Record<PortalProject["status"], { label: string; cls: string }> = {
-  planejamento: { label: "Planejamento", cls: "bg-tint-yellow text-[#8a6d00]" },
+  planejamento: { label: "Planejamento", cls: "bg-tint-yellow text-warn" },
   em_andamento: { label: "Em andamento", cls: "bg-tint-blue text-primary" },
   pausado: { label: "Pausado", cls: "bg-tile text-muted" },
-  concluido: { label: "Concluído", cls: "bg-tint-green text-[#3c8a2e]" },
+  concluido: { label: "Concluído", cls: "bg-tint-green text-ok" },
   cancelado: { label: "Cancelado", cls: "bg-tile text-muted" },
 };
 
 const STAGE: Record<Stage["status"], { icon: string; label: string; tile: string }> = {
-  concluida: { icon: "✓", label: "Concluída", tile: "bg-tint-green text-[#3c8a2e]" },
+  concluida: { icon: "✓", label: "Concluída", tile: "bg-tint-green text-ok" },
   em_andamento: { icon: "●", label: "Em andamento", tile: "bg-tint-blue text-primary" },
   pendente: { icon: "○", label: "Pendente", tile: "bg-tile text-muted" },
 };
@@ -89,7 +90,7 @@ export function ProjectPortal({
 
   const requestItem = (r: FileRequest, answerable: boolean) => {
     const answers = filesByRequest.get(r.id) ?? [];
-    const pill = r.status === "concluido" ? "bg-tint-green text-[#3c8a2e]" : r.status === "respondido" ? "bg-tint-blue text-primary" : "bg-tint-yellow text-[#8a6d00]";
+    const pill = r.status === "concluido" ? "bg-tint-green text-ok" : r.status === "respondido" ? "bg-tint-blue text-primary" : "bg-tint-yellow text-warn";
     return (
       <li key={r.id} className="flex flex-col gap-2 rounded-[1.5rem] bg-tile/50 p-3">
         <div className="flex flex-wrap items-start gap-2">
@@ -107,8 +108,8 @@ export function ProjectPortal({
             {answers.map((f) => (
               <li key={f.id}>
                 {f.url
-                  ? <a href={f.url} className="text-sm font-medium text-primary hover:underline">📎 {f.name}</a>
-                  : <span className="text-sm text-muted">📎 {f.name}</span>}
+                  ? <a href={f.url} className="text-sm font-medium text-primary hover:underline"><Icon3D e="📎" /> {f.name}</a>
+                  : <span className="text-sm text-muted"><Icon3D e="📎" /> {f.name}</span>}
               </li>
             ))}
           </ul>
@@ -122,7 +123,7 @@ export function ProjectPortal({
               <input type="hidden" name="id" value={r.id} />
               <input type="hidden" name="project_id" value={project.id} />
               <input type="hidden" name="status" value="concluido" />
-              <button className="btn btn-soft h-9 bg-white px-3 text-xs">Concluir</button>
+              <button className="btn btn-soft h-9 bg-raised px-3 text-xs">Concluir</button>
             </form>
           )}
           {isStaff && r.status === "concluido" && (
@@ -130,7 +131,7 @@ export function ProjectPortal({
               <input type="hidden" name="id" value={r.id} />
               <input type="hidden" name="project_id" value={project.id} />
               <input type="hidden" name="status" value="aberto" />
-              <button className="btn btn-soft h-9 bg-white px-3 text-xs">Reabrir</button>
+              <button className="btn btn-soft h-9 bg-raised px-3 text-xs">Reabrir</button>
             </form>
           )}
         </div>
@@ -153,7 +154,7 @@ export function ProjectPortal({
             <h1 className="truncate text-2xl font-bold tracking-tight">{project.name}</h1>
           </div>
           <span className={`pill ${st.cls}`}>{st.label}</span>
-          {chatHref && <Link href={chatHref} className="btn btn-soft h-11 px-4 text-sm">💬 {isStaff ? "Conversa com o cliente" : "Falar com a agência"}</Link>}
+          {chatHref && <Link href={chatHref} className="btn btn-soft h-10 px-4 text-sm"><Icon3D e="💬" /> {isStaff ? "Conversa com o cliente" : "Falar com a agência"}</Link>}
         </div>
       </WidgetGroup>
 
@@ -258,7 +259,7 @@ export function ProjectPortal({
               <ul className="widget flex flex-col gap-1 p-2">
                 {clientTasks.map((t) => (
                   <li key={t.id} className="flex flex-wrap items-center gap-3 rounded-[1.25rem] p-2">
-                    <span className={`grid size-8 place-items-center rounded-full text-sm font-bold ${t.completed_at ? "bg-tint-green text-[#3c8a2e]" : "bg-tile text-muted"}`}>{t.completed_at ? "✓" : "•"}</span>
+                    <span className={`grid size-8 place-items-center rounded-full text-sm font-bold ${t.completed_at ? "bg-tint-green text-ok" : "bg-tile text-muted"}`}>{t.completed_at ? "✓" : "•"}</span>
                     <span className={`min-w-40 flex-1 font-medium ${t.completed_at ? "text-muted line-through decoration-1" : ""}`}>{t.title}</span>
                     {t.column && <span className="pill bg-tile text-muted">{t.column.name}</span>}
                     {t.due_date && !t.completed_at && <span className="text-xs text-muted">até {br(t.due_date)}</span>}
@@ -340,7 +341,7 @@ export function ProjectPortal({
                           <input type="hidden" name="id" value={f.id} />
                           <input type="hidden" name="project_id" value={project.id} />
                           <input type="hidden" name="visibility" value={f.visibility === "cliente" ? "interno" : "cliente"} />
-                          <button className={`pill ${f.visibility === "cliente" ? "bg-tint-green text-[#3c8a2e]" : "bg-tile text-muted"}`}
+                          <button className={`pill ${f.visibility === "cliente" ? "bg-tint-green text-ok" : "bg-tile text-muted"}`}
                             title="Clique para alternar">
                             {f.visibility === "cliente" ? "👁 Cliente vê" : "🔒 Só a equipe"}
                           </button>

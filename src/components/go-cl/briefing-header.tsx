@@ -5,8 +5,8 @@ import { Tile, WidgetGroup } from "../ui";
 export function BriefingStatus({ briefing }: { briefing: Briefing | null }) {
   if (!briefing) return <span className="pill bg-tile text-muted">Não iniciado</span>;
   return briefing.status === "validado"
-    ? <span className="pill bg-tint-green text-[#3c8a2e]">Validado</span>
-    : <span className="pill bg-tint-yellow text-[#8a6d00]">Rascunho</span>;
+    ? <span className="pill bg-tint-green text-ok">Validado</span>
+    : <span className="pill bg-tint-yellow text-warn">Rascunho</span>;
 }
 
 export function BriefingHeader({ lead, briefing }: { lead: Lead; briefing: Briefing | null }) {

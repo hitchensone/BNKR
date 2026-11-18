@@ -11,7 +11,7 @@ export default async function SignInPage({ searchParams }: PageProps<"/entrar">)
       <WidgetGroup className="w-full max-w-sm">
         <div className="widget flex items-center gap-4 p-3">
           <div className="grid size-16 shrink-0 place-items-center rounded-full bg-gradient-to-b from-[#c8f37a] to-[#7ed957] shadow-[0_10px_20px_-8px_rgb(126_217_87/0.8)]">
-            <span className="grid size-9 place-items-center rounded-full bg-white/90 text-xs font-extrabold text-primary">GO</span>
+            <span className="grid size-9 place-items-center rounded-full bg-raised/90 text-xs font-extrabold text-primary">GO</span>
           </div>
           <div>
             <h1 className="text-xl font-bold">GO Bunker!</h1>

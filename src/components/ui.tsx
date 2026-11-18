@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { Icon3D } from "./icon3d";
 
 // Peças visuais do sistema. Ver os tokens em app/globals.css.
 
@@ -17,7 +18,7 @@ export function cx(...c: (string | false | null | undefined)[]) {
   return c.filter(Boolean).join(" ");
 }
 
-/** Card branco arredondado. */
+/** Card arredondado (branco no tema padrão). */
 export function Widget({ className, children }: { className?: string; children: ReactNode }) {
   return <div className={cx("widget", className)}>{children}</div>;
 }
@@ -53,7 +54,7 @@ export function Bridge({
   return <div aria-hidden className="bridge" style={style} />;
 }
 
-/** Bloco de ícone pastel. */
+/** Bloco de ícone pastel. Um emoji como filho vira ícone 3D. */
 export function Tile({
   tint,
   size = "md",
@@ -65,8 +66,9 @@ export function Tile({
   className?: string;
   children: ReactNode;
 }) {
-  const sizes = { sm: "size-9 text-base", md: "size-12 text-xl", lg: "size-16 text-3xl" };
-  return <div className={cx("tile", sizes[size], tint && tintClass[tint], className)}>{children}</div>;
+  const sizes = { sm: "size-9 text-base", md: "size-11 text-lg", lg: "size-14 text-2xl" };
+  const content = typeof children === "string" ? <Icon3D e={children} /> : children;
+  return <div className={cx("tile", sizes[size], tint && tintClass[tint], className)}>{content}</div>;
 }
 
 /** Número com rótulo, no estilo dos indicadores da referência. */
@@ -75,8 +77,8 @@ export function Stat({ icon, tint, value, label }: { icon: string; tint: Tint; v
     <div className="flex items-center gap-3">
       <Tile tint={tint} size="md">{icon}</Tile>
       <div className="leading-tight">
-        <p className="text-lg font-bold">{value}</p>
-        <p className="text-sm text-muted">{label}</p>
+        <p className="text-base font-bold">{value}</p>
+        <p className="text-xs text-muted">{label}</p>
       </div>
     </div>
   );

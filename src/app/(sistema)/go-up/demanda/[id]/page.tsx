@@ -42,7 +42,7 @@ export default async function TaskPage({ params }: PageProps<"/go-up/demanda/[id
             <p className="truncate text-xs font-semibold uppercase tracking-wider text-muted">
               {parent ? `Subtarefa de: ${parent.title}` : `${project?.client?.trade_name || project?.client?.name} · ${project?.name}`}
             </p>
-            <h1 className="text-2xl font-bold tracking-tight">{task.title}</h1>
+            <h1 className="text-xl font-bold tracking-tight">{task.title}</h1>
             <p className="text-xs text-muted">
               Pedido por {task.requested_by ? names.get(task.requested_by) ?? "—" : "—"} · {formatDateTime(task.created_at)}
               {task.completed_at ? ` · concluída ${formatDateTime(task.completed_at)}` : ""}
@@ -53,7 +53,7 @@ export default async function TaskPage({ params }: PageProps<"/go-up/demanda/[id
             <form action={moveTaskForm}>
               <input type="hidden" name="id" value={task.id} />
               <input type="hidden" name="column_id" value={task.completed_at ? firstCol.id : doneCol.id} />
-              <button className={`btn h-11 px-4 text-sm ${task.completed_at ? "btn-soft" : "btn-primary"}`}>
+              <button className={`btn h-10 px-4 text-sm ${task.completed_at ? "btn-soft" : "btn-primary"}`}>
                 {task.completed_at ? "Reabrir" : "✓ Concluir"}
               </button>
             </form>
@@ -84,7 +84,7 @@ export default async function TaskPage({ params }: PageProps<"/go-up/demanda/[id
                           <input type="hidden" name="id" value={s.id} />
                           <input type="hidden" name="column_id" value={s.completed_at ? firstCol.id : doneCol.id} />
                           <button aria-label={s.completed_at ? `Reabrir ${s.title}` : `Concluir ${s.title}`}
-                            className={`grid size-8 place-items-center rounded-full text-sm font-bold ${s.completed_at ? "bg-tint-green text-[#3c8a2e]" : "bg-tile text-muted hover:bg-tint-green"}`}>
+                            className={`grid size-8 place-items-center rounded-full text-sm font-bold ${s.completed_at ? "bg-tint-green text-ok" : "bg-tile text-muted hover:bg-tint-green"}`}>
                             {s.completed_at ? "✓" : ""}
                           </button>
                         </form>

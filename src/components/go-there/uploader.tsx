@@ -84,7 +84,7 @@ export function Uploader({
         </select>
       )}
       {status.message && (
-        <span role={status.error ? "alert" : "status"} className={`text-xs font-medium ${status.error ? "text-accent" : "text-[#3c8a2e]"}`}>
+        <span role={status.error ? "alert" : "status"} className={`text-xs font-medium ${status.error ? "text-accent" : "text-ok"}`}>
           {status.message}
         </span>
       )}

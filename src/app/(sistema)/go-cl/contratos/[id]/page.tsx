@@ -10,6 +10,7 @@ import { getContract, getProjectFromContract, previewContract } from "@/lib/data
 import { formatBRL } from "@/lib/go-cl/render";
 import { formatDateTime } from "@/components/go-cl/labels";
 import { backToDraft, cancelContract, markSent, markSigned, saveContractAction } from "../actions";
+import { Icon3D } from "@/components/icon3d";
 
 export default async function ContractPage({ params, searchParams }: PageProps<"/go-cl/contratos/[id]">) {
   await requireStaff();
@@ -77,23 +78,23 @@ export default async function ContractPage({ params, searchParams }: PageProps<"
               <PrintButton />
               {contract.status === "rascunho" && (
                 <>
-                  <Link href={`/go-cl/contratos/${id}?editar=1`} className="btn btn-soft h-11 px-4 text-sm">✏️ Editar</Link>
+                  <Link href={`/go-cl/contratos/${id}?editar=1`} className="btn btn-soft h-10 px-4 text-sm"><Icon3D e="✏️" /> Editar</Link>
                   <form action={markSent}>
                     <input type="hidden" name="id" value={id} />
-                    <button className="btn btn-primary h-11 px-4 text-sm">Marcar como enviado</button>
+                    <button className="btn btn-primary h-10 px-4 text-sm">Marcar como enviado</button>
                   </form>
                 </>
               )}
               {contract.status === "enviado" && (
                 <form action={backToDraft}>
                   <input type="hidden" name="id" value={id} />
-                  <button className="btn btn-soft h-11 px-4 text-sm">Voltar para rascunho</button>
+                  <button className="btn btn-soft h-10 px-4 text-sm">Voltar para rascunho</button>
                 </form>
               )}
               {(contract.status === "rascunho" || contract.status === "enviado") && (
                 <form action={cancelContract}>
                   <input type="hidden" name="id" value={id} />
-                  <button className="btn h-11 px-4 text-sm text-accent hover:bg-tint-red">Cancelar</button>
+                  <button className="btn h-10 px-4 text-sm text-accent hover:bg-tint-red">Cancelar</button>
                 </form>
               )}
             </Widget>

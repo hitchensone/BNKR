@@ -10,7 +10,7 @@ function Feedback({ state }: { state: PostState }) {
   if (!state) return null;
   return state.error
     ? <p role="alert" className="text-sm font-medium text-accent">{state.error}</p>
-    : <p role="status" className="text-sm font-medium text-[#3c8a2e]">{state.ok}</p>;
+    : <p role="status" className="text-sm font-medium text-ok">{state.ok}</p>;
 }
 
 type Media = { id: string; name: string; project_id: string | null; mime_type: string | null };
@@ -112,23 +112,23 @@ export function MetricsForm({ post }: { post: Post }) {
 export function ReviewForm({ postId }: { postId: string }) {
   const [state, action, pending] = useActionState(reviewPostAction, null);
   const [adjust, setAdjust] = useState(false);
-  if (state?.ok) return <p role="status" className="rounded-[1.25rem] bg-tint-green p-3 text-sm font-semibold text-[#3c8a2e]">{state.ok}</p>;
+  if (state?.ok) return <p role="status" className="rounded-[1.25rem] bg-tint-green p-3 text-sm font-semibold text-ok">{state.ok}</p>;
   return (
     <form action={action} className="flex flex-col gap-2">
       <input type="hidden" name="id" value={postId} />
       {adjust && (
-        <textarea name="feedback" required rows={3} autoFocus placeholder="O que precisa mudar?" aria-label="O que precisa mudar" className="field h-auto bg-white py-3" />
+        <textarea name="feedback" required rows={3} autoFocus placeholder="O que precisa mudar?" aria-label="O que precisa mudar" className="field h-auto bg-raised py-3" />
       )}
       <div className="flex flex-wrap gap-2">
         {!adjust ? (
           <>
-            <button name="decision" value="aprovar" disabled={pending} className="btn btn-primary h-11 px-5 text-sm">✓ Aprovar</button>
-            <button type="button" onClick={() => setAdjust(true)} className="btn btn-soft h-11 bg-white px-5 text-sm">Pedir ajuste</button>
+            <button name="decision" value="aprovar" disabled={pending} className="btn btn-primary h-10 px-5 text-sm">✓ Aprovar</button>
+            <button type="button" onClick={() => setAdjust(true)} className="btn btn-soft h-10 bg-raised px-5 text-sm">Pedir ajuste</button>
           </>
         ) : (
           <>
-            <button name="decision" value="ajustar" disabled={pending} className="btn btn-accent h-11 px-5 text-sm">Enviar pedido de ajuste</button>
-            <button type="button" onClick={() => setAdjust(false)} className="btn btn-soft h-11 bg-white px-4 text-sm">Cancelar</button>
+            <button name="decision" value="ajustar" disabled={pending} className="btn btn-accent h-10 px-5 text-sm">Enviar pedido de ajuste</button>
+            <button type="button" onClick={() => setAdjust(false)} className="btn btn-soft h-10 bg-raised px-4 text-sm">Cancelar</button>
           </>
         )}
       </div>

@@ -32,7 +32,7 @@ export default async function PostPage({ params }: PageProps<"/go-up/posts/[id]"
             <p className="truncate text-xs font-semibold uppercase tracking-wider text-muted">
               {post.project?.client?.trade_name || post.project?.client?.name} · {post.project?.name}
             </p>
-            <h1 className="text-2xl font-bold tracking-tight">{post.title}</h1>
+            <h1 className="text-xl font-bold tracking-tight">{post.title}</h1>
           </div>
           <span className={`pill ${st.cls}`}>{st.label}</span>
         </div>

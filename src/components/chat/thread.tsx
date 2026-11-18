@@ -7,6 +7,7 @@ import { createClient } from "@/lib/supabase/client";
 import { askAssistant } from "@/app/(sistema)/bunker-chat/actions";
 import { mentionsAssistant } from "@/lib/chat/prompt";
 import { cx } from "../ui";
+import { Icon3D } from "@/components/icon3d";
 
 type Pending = ChatMessage & { failed?: boolean };
 
@@ -150,13 +151,13 @@ export function ChatThread({
       >
         {messages.length === 0 && assistant === "auto" && (
           <div className="m-auto max-w-sm text-center text-sm text-muted">
-            <p className="mb-2 text-3xl">🤖</p>
+            <p className="mb-2 text-4xl"><Icon3D e="🤖" /></p>
             Pergunte sobre projetos, prazos, posts aguardando aprovação ou suas demandas. Eu respondo com o que está no sistema e na base de conhecimento.
           </div>
         )}
         {messages.length === 0 && assistant !== "auto" && (
           <div className="m-auto max-w-xs text-center text-sm text-muted">
-            <p className="mb-2 text-3xl">👋</p>
+            <p className="mb-2 text-4xl"><Icon3D e="👋" /></p>
             Nenhuma mensagem ainda. Comece a conversa.
           </div>
         )}
@@ -171,8 +172,8 @@ export function ChatThread({
               return (
                 <div key={m.id} className={cx("group flex gap-2", mine ? "flex-row-reverse" : "", m.first ? "mt-3" : "mt-0.5")}>
                   {!mine && (
-                    <span className={cx("grid size-8 shrink-0 place-items-center rounded-full text-[11px] font-bold", m.first ? "" : "invisible", bot ? "bg-tint-purple text-[#5b3db8]" : "bg-tint-blue text-primary")} aria-hidden>
-                      {bot ? "🤖" : initialsOf(name)}
+                    <span className={cx("grid size-8 shrink-0 place-items-center rounded-full text-[11px] font-bold", m.first ? "" : "invisible", bot ? "bg-tint-purple text-violet" : "bg-tint-blue text-primary")} aria-hidden>
+                      {bot ? <Icon3D e="🤖" /> : initialsOf(name)}
                     </span>
                   )}
                   <div className={cx("flex max-w-[min(36rem,85%)] flex-col", mine ? "items-end" : "items-start")}>
@@ -211,8 +212,8 @@ export function ChatThread({
         ))}
         {thinking && (
           <div className="mt-3 flex items-center gap-2" role="status">
-            <span className="grid size-8 place-items-center rounded-full bg-tint-purple text-[11px]" aria-hidden>🤖</span>
-            <p className="rounded-[1.25rem] rounded-tl-md bg-tint-purple px-3.5 py-2 text-sm text-[#5b3db8]">
+            <span className="grid size-8 place-items-center rounded-full bg-tint-purple text-sm" aria-hidden><Icon3D e="🤖" /></span>
+            <p className="rounded-[1.25rem] rounded-tl-md bg-tint-purple px-3.5 py-2 text-sm text-violet">
               <span className="inline-flex gap-1" aria-label="Assistente digitando">
                 <span className="size-1.5 animate-bounce rounded-full bg-current [animation-delay:-0.3s]" />
                 <span className="size-1.5 animate-bounce rounded-full bg-current [animation-delay:-0.15s]" />
@@ -260,14 +261,14 @@ export function ThreadHeader({ icon, tint, title, subtitle, href, hrefLabel }: {
   return (
     <>
       <Link href="/bunker-chat" aria-label="Voltar às conversas" className="tile size-11 text-lg lg:hidden">←</Link>
-      <span className={cx("tile size-11 shrink-0 text-lg", tint)}>{icon}</span>
+      <span className={cx("tile size-10 shrink-0 text-lg", tint)}><Icon3D e={icon} /></span>
       <div className="min-w-0 flex-1">
         <h2 className="truncate text-lg font-bold">{title}</h2>
         {subtitle && <p className="truncate text-xs text-muted">{subtitle}</p>}
       </div>
       {href && (
         <Link href={href} aria-label={hrefLabel ?? "Abrir projeto"} className="btn btn-soft h-10 shrink-0 px-3 text-sm sm:px-4">
-          <span aria-hidden className="sm:hidden">{hrefLabel ? "🧠" : "🛰️"}</span><span className="hidden sm:inline">{hrefLabel ?? "Abrir projeto"}</span>
+          <span aria-hidden className="sm:hidden"><Icon3D e={hrefLabel ? "🧠" : "🛰️"} /></span><span className="hidden sm:inline">{hrefLabel ?? "Abrir projeto"}</span>
         </Link>
       )}
     </>

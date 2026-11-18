@@ -20,14 +20,14 @@ export default async function TeamPage() {
         <Link href="/go-up" aria-label="Voltar ao GO UP" className="tile size-12 text-lg">←</Link>
         <Tile tint="blue" size="lg">👥</Tile>
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">Equipe</h1>
+          <h1 className="text-xl font-bold tracking-tight">Equipe</h1>
           <p className="text-sm text-muted">Quem trabalha nos projetos. Admin também vê o financeiro.</p>
         </div>
       </Widget>
 
       <WidgetGroup>
         <div className="widget flex items-center gap-4 p-3">
-          <Tile tint="green" size="md">🧑‍💻</Tile>
+          <Tile tint="green" size="md">💻</Tile>
           <div>
             <h2 className="text-lg font-bold">{staff.length} pessoa{staff.length === 1 ? "" : "s"}</h2>
             <p className="text-sm text-muted">Disponíveis para receber demandas.</p>
