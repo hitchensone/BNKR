@@ -228,3 +228,55 @@ body {
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
+
+/* =====================================================================
+   Documento de contrato (tela e impressão)
+   ===================================================================== */
+.contract-doc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #1d2340;
+}
+.contract-doc h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0 0 1.75rem;
+  letter-spacing: -0.01em;
+}
+.contract-doc h2 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 1.75rem 0 0.5rem;
+  letter-spacing: 0.02em;
+}
+.contract-doc p { margin: 0 0 0.85rem; text-align: justify; }
+.contract-doc ul { margin: 0 0 0.85rem 1.25rem; list-style: disc; }
+.contract-doc li { margin-bottom: 0.25rem; }
+.contract-blank {
+  background: var(--tint-red);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+.contract-sign { margin-top: 2.5rem; text-align: center; break-inside: avoid; }
+.contract-sign p { text-align: center; margin: 0.35rem 0 0; }
+.contract-sign-line { width: 70%; max-width: 22rem; margin: 0 auto; border-top: 1px solid #1d2340; }
+
+@media print {
+  @page { size: A4; margin: 20mm 18mm; }
+  body { background: #fff !important; }
+  .no-print { display: none !important; }
+  .print-sheet {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    filter: none !important;
+  }
+  .contract-doc { font-size: 11pt; color: #000; }
+  .contract-clause { break-inside: avoid; page-break-inside: avoid; }
+  .contract-doc p, .contract-doc li { orphans: 3; widows: 3; }
+  .contract-blank { background: none; color: inherit; }
+  main { padding: 0 !important; }
+}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Briefing, ContactChannel, Lead, LeadInteraction } from "@/lib/types";
+import type { Briefing, ContactChannel, Contract, Lead, LeadInteraction } from "@/lib/types";
 import type { FormState } from "@/app/(sistema)/go-cl/[id]/actions";
 import { LEAD_STAGES, stageLabel } from "@/lib/go-cl/stages";
 import { formatBRL } from "@/lib/go-cl/render";
@@ -7,6 +7,7 @@ import { Bridge, Tile, Widget, WidgetGroup } from "../ui";
 import { CHANNEL, TEMPERATURE, formatDateTime } from "./labels";
 import { MessageCard, type ReadyMessage } from "./message-card";
 import { BriefingStatus } from "./briefing-header";
+import { ContractStatusPill } from "./contract-bits";
 import { InteractionForm, LeadInfoForm } from "./lead-forms";
 
 type FormAction = (state: FormState, formData: FormData) => Promise<FormState>;
@@ -14,6 +15,7 @@ type FormAction = (state: FormState, formData: FormData) => Promise<FormState>;
 export function LeadDetail({
   lead,
   briefing,
+  contracts,
   interactions,
   messages,
   moveAction,
@@ -24,6 +26,7 @@ export function LeadDetail({
 }: {
   lead: Lead;
   briefing: Briefing | null;
+  contracts: Contract[];
   interactions: LeadInteraction[];
   messages: ReadyMessage[];
   moveAction: (formData: FormData) => void | Promise<void>;
@@ -106,6 +109,34 @@ export function LeadDetail({
         <Link href={`/go-cl/${lead.id}/briefing`} className="btn btn-primary h-11 px-5 text-sm">
           {briefing ? "Abrir briefing" : "Começar briefing"}
         </Link>
+      </Widget>
+
+      {/* Contratos */}
+      <Widget className="flex flex-col gap-2 p-3">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-3 pr-1">
+          <Tile tint="green" size="md">📄</Tile>
+          <div className="min-w-48 flex-1">
+            <h2 className="font-bold">Contrato</h2>
+            <p className="text-sm text-muted">
+              {briefing ? "Gerado a partir do briefing, pronto para imprimir ou salvar em PDF." : "Faça o briefing primeiro: ele vira o escopo do contrato."}
+            </p>
+          </div>
+          {briefing && !contracts.some((c) => c.status !== "cancelado") && (
+            <Link href={`/go-cl/${lead.id}/contrato`} className="btn btn-primary h-11 px-5 text-sm">Gerar contrato</Link>
+          )}
+        </div>
+        {contracts.length > 0 && (
+          <ul className="flex flex-col">
+            {contracts.map((c) => (
+              <li key={c.id}>
+                <Link href={`/go-cl/contratos/${c.id}`} className="flex flex-wrap items-center gap-3 rounded-[1.25rem] p-2 pl-[4.25rem] transition hover:bg-tile/60">
+                  <span className="min-w-0 flex-1 truncate text-sm font-semibold">{c.number} · {c.title}</span>
+                  <ContractStatusPill status={c.status} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
       </Widget>
 
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">

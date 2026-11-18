@@ -40,12 +40,13 @@ export function LeadBoard({
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-wrap gap-6">
-        <Widget className="flex min-w-72 flex-1 items-center gap-4 p-3 pr-6">
+        <Widget className="flex min-w-72 flex-1 flex-wrap items-center gap-4 p-3 pr-4">
           <Tile tint="red" size="lg">🎯</Tile>
           <div>
             <h1 className="text-2xl font-bold tracking-tight">GO CL</h1>
             <p className="text-sm text-muted">Captação de leads, do primeiro contato ao contrato.</p>
           </div>
+          <Link href="/go-cl/contratos" className="btn btn-soft ml-auto h-11 px-4 text-sm">📄 Contratos</Link>
         </Widget>
         <Widget className="grid grid-cols-2 items-center gap-x-6 gap-y-4 p-4 px-5 sm:flex sm:flex-wrap sm:gap-x-8 sm:px-6">
           <Stat icon="📇" tint="blue" value={open.length} label="Em aberto" />

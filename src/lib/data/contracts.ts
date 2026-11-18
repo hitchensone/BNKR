@@ -85,8 +85,51 @@ export async function setContractStatus(id: string, status: ContractStatus, sign
   if (status === "enviado" || status === "assinado") {
     patch.rendered_body = await previewContract(contract);
   }
+  if (status === "rascunho") {
+    // Voltar a rascunho libera o texto para ser gerado de novo após edições.
+    patch.rendered_body = null;
+    patch.sent_at = null;
+  }
   if (status === "assinado") patch.signed_by_name = signedByName ?? contract.party_representative ?? contract.party_name;
   const { data, error } = await supabase.from("contracts").update(patch).eq("id", id).select().single();
   if (error) throw error;
   return data as Contract;
+}
+
+/** Atualiza um contrato. Só rascunhos podem ser editados. */
+export async function updateContract(id: string, input: Partial<ContractInput>) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("contracts")
+    .update(input)
+    .eq("id", id)
+    .eq("status", "rascunho")
+    .select()
+    .maybeSingle();
+  if (error) throw error;
+  if (!data) throw new Error("Só contratos em rascunho podem ser editados.");
+  return data as Contract;
+}
+
+export async function listContractsByLead(leadId: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("contracts")
+    .select("*")
+    .eq("lead_id", leadId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data as Contract[];
+}
+
+/** Projeto gerado automaticamente na assinatura do contrato. */
+export async function getProjectFromContract(contractId: string) {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("projects")
+    .select("id, name, status, client_id")
+    .eq("origin_contract_id", contractId)
+    .maybeSingle();
+  if (error) throw error;
+  return data as { id: string; name: string; status: string; client_id: string } | null;
 }
