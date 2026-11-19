@@ -7,11 +7,11 @@ import { cx } from "./ui";
 
 // Miniatura de cada tema: fundo + dois "cards"
 const PREVIEW: Record<ThemeId, { bg: string; card: string; line: string; extra?: string }> = {
-  padrao: { bg: "#fae04b", card: "#ffffff", line: "#232a4d" },
+  padrao: { bg: "var(--wall, #fae04b)", card: "#ffffff", line: "#232a4d" },
   dark: { bg: "#12141b", card: "#1b1e29", line: "#eef0f8" },
-  glass: { bg: "#fae04b", card: "rgb(255 255 255 / 0.28)", line: "#232a4d", extra: "inset 0 0 0 1px rgb(255 255 255 / 0.8)" },
-  "glass-ish": { bg: "#fae04b", card: "rgb(255 255 255 / 0.6)", line: "#232a4d", extra: "inset 0 0 0 1px rgb(255 255 255 / 0.5)" },
-  liquid: { bg: "#fae04b", card: "rgb(255 255 255 / 0.16)", line: "#232a4d", extra: "inset 2px 2px 2px rgb(255 255 255 / 0.9), inset -1px -1px 1px rgb(255 255 255 / 0.5)" },
+  glass: { bg: "var(--wall, #fae04b)", card: "rgb(255 255 255 / 0.28)", line: "#232a4d", extra: "inset 0 0 0 1px rgb(255 255 255 / 0.8)" },
+  "glass-ish": { bg: "var(--wall, #fae04b)", card: "rgb(255 255 255 / 0.6)", line: "#232a4d", extra: "inset 0 0 0 1px rgb(255 255 255 / 0.5)" },
+  liquid: { bg: "var(--wall, #fae04b)", card: "rgb(255 255 255 / 0.16)", line: "#232a4d", extra: "inset 2px 2px 2px rgb(255 255 255 / 0.9), inset -1px -1px 1px rgb(255 255 255 / 0.5)" },
 };
 
 export function ThemePicker({ saved }: { saved: ThemeId }) {
@@ -49,7 +49,7 @@ export function ThemePicker({ saved }: { saved: ThemeId }) {
                 className="relative block h-20 overflow-hidden rounded-[0.9rem]"
                 style={{
                   background: t.id === "padrao" || t.id === "dark" ? p.bg
-                    : `radial-gradient(60% 70% at 20% 25%, #fff 0%, transparent 60%), radial-gradient(50% 60% at 85% 20%, #ff8a3d 0%, transparent 65%), ${p.bg}`,
+                    : `radial-gradient(60% 70% at 20% 25%, #fff 0%, transparent 60%), radial-gradient(50% 60% at 85% 20%, color-mix(in oklab, ${p.bg}, black 18%) 0%, transparent 65%), ${p.bg}`,
                 }}
               >
                 <span className="absolute left-2.5 top-2.5 h-8 w-[55%] rounded-lg" style={{ background: p.card, boxShadow: p.extra, backdropFilter: "blur(6px)" }}>

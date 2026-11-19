@@ -1,4 +1,5 @@
 import { ThemePicker } from "@/components/theme-picker";
+import { WallpaperPicker } from "@/components/wallpaper-picker";
 import { Tile, Widget } from "@/components/ui";
 import { requireSession } from "@/lib/data/session";
 import { PasswordForm } from "../conta/form";
@@ -24,6 +25,17 @@ export default async function SettingsPage() {
           </div>
         </div>
         <ThemePicker saved={session.theme} />
+      </Widget>
+
+      <Widget className="flex flex-col gap-4 p-5">
+        <div className="flex items-center gap-3">
+          <Tile tint="blue" size="md">🖼️</Tile>
+          <div>
+            <h2 className="font-bold">Cor do fundo</h2>
+            <p className="text-xs text-muted">O amarelo é o padrão. Escolha outra cor se preferir.</p>
+          </div>
+        </div>
+        <WallpaperPicker />
       </Widget>
 
       <Widget className="grid gap-5 p-5 md:grid-cols-[1fr_1.2fr]">
